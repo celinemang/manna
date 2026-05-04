@@ -43,7 +43,16 @@ type Dict = {
     steps: { kicker: string; title: string; body: string }[];
   };
   emotions: Record<
-    "anxious" | "lonely" | "tired" | "guilty" | "grateful" | "hopeful",
+    | "anxious"
+    | "lonely"
+    | "tired"
+    | "guilty"
+    | "angry"
+    | "grateful"
+    | "afraid"
+    | "discouraged"
+    | "peaceful"
+    | "hopeful",
     { label: string; prompt: string }
   >;
   localeSwitcher: { en: string; ko: string };
@@ -114,7 +123,11 @@ const en: Dict = {
     lonely: { label: "Lonely", prompt: "when you feel alone" },
     tired: { label: "Tired", prompt: "when you have nothing left" },
     guilty: { label: "Guilty", prompt: "when shame is heavy" },
+    angry: { label: "Angry", prompt: "to soften a hard moment" },
     grateful: { label: "Grateful", prompt: "to rest in thanks" },
+    afraid: { label: "Afraid", prompt: "when fear feels close" },
+    discouraged: { label: "Discouraged", prompt: "when the road feels long" },
+    peaceful: { label: "Peaceful", prompt: "to keep the quiet" },
     hopeful: { label: "Hopeful", prompt: "to lean into hope" },
   },
   localeSwitcher: { en: "EN", ko: "KO" },
@@ -186,7 +199,11 @@ const ko: Dict = {
     lonely: { label: "외로울 때", prompt: "혼자라 느낄 때" },
     tired: { label: "지칠 때", prompt: "더 이상 힘이 없을 때" },
     guilty: { label: "죄책감", prompt: "마음이 무거울 때" },
+    angry: { label: "화날 때", prompt: "굳은 순간을 부드럽게" },
     grateful: { label: "감사할 때", prompt: "감사 안에 머물기 위해" },
+    afraid: { label: "두려울 때", prompt: "두려움이 가까울 때" },
+    discouraged: { label: "낙심할 때", prompt: "길이 멀게 느껴질 때" },
+    peaceful: { label: "평안할 때", prompt: "그 고요를 지키기 위해" },
     hopeful: { label: "소망", prompt: "소망에 기대고 싶을 때" },
   },
   localeSwitcher: { en: "EN", ko: "KO" },

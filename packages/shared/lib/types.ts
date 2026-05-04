@@ -5,8 +5,31 @@ export type EmotionId =
   | "lonely"
   | "tired"
   | "guilty"
+  | "angry"
   | "grateful"
+  | "afraid"
+  | "discouraged"
+  | "peaceful"
   | "hopeful";
+
+export type EmotionMeta = {
+  id: EmotionId;
+  // Designer's per-emotion paper tones — bg fills the verse card, ink colors
+  // the type. See HANDOFF + tokens.jsx (MANNA_EMOTIONS).
+  bg: string;
+  ink: string;
+  // Glyph kind from MannaGlyph (wave / moon / leaf / drop / flame / sun /
+  // shield / spark / wheat).
+  glyph:
+    | "wave"
+    | "moon"
+    | "leaf"
+    | "drop"
+    | "flame"
+    | "sun"
+    | "shield"
+    | "spark";
+};
 
 export type LocalizedText = Record<Locale, string>;
 
