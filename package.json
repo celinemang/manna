@@ -6,6 +6,10 @@
     "apps/*",
     "packages/*"
   ],
+  "overrides": {
+    "react": "19.1.0",
+    "react-dom": "19.1.0"
+  },
   "scripts": {
     "web": "npm run dev --workspace=@manna/web",
     "build:web": "npm run build --workspace=@manna/web",

@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { emotionIds } from "@/data/emotions";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { emotionIds } from "@manna/shared/data/emotions";
+import { isLocale } from "@manna/shared/i18n/config";
+import { getDictionary } from "@manna/shared/i18n/dictionaries";
 
 export default async function FeelingsPage({
   params,

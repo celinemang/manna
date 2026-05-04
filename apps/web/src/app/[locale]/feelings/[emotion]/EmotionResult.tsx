@@ -8,9 +8,9 @@ import {
   saveItem,
   useSaved,
 } from "@/lib/saved";
-import type { Devotion, EmotionId, Verse } from "@/lib/types";
-import type { Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n/dictionaries";
+import type { Devotion, EmotionId, Verse } from "@manna/shared/lib/types";
+import type { Locale } from "@manna/shared/i18n/config";
+import type { Dictionary } from "@manna/shared/i18n/dictionaries";
 
 function pickIndex(length: number, exclude: number) {
   if (length <= 1) return 0;

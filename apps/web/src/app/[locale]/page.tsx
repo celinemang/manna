@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
 import { VerseFeed } from "@/components/VerseFeed";
-import { verses } from "@/data/verses";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { verses } from "@manna/shared/data/verses";
+import { isLocale } from "@manna/shared/i18n/config";
+import { getDictionary } from "@manna/shared/i18n/dictionaries";
 
 export default async function HomePage({
   params,

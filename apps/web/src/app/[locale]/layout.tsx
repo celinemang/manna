@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { isLocale, locales } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { isLocale, locales } from "@manna/shared/i18n/config";
+import { getDictionary } from "@manna/shared/i18n/dictionaries";
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

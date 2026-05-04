@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
-import { getVerseById } from "@/data/verses";
-import { isLocale } from "@/i18n/config";
+import { getVerseById } from "@manna/shared/data/verses";
+import { isLocale } from "@manna/shared/i18n/config";
 
 export const runtime = "nodejs";
 

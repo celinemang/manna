@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 import { GoogleGenAI, Type } from "@google/genai";
 import { z } from "zod";
-import { getVerseById } from "@/data/verses";
-import { isLocale, type Locale } from "@/i18n/config";
-import type { EmotionId } from "@/lib/types";
+import { getVerseById } from "@manna/shared/data/verses";
+import { isLocale, type Locale } from "@manna/shared/i18n/config";
+import type { EmotionId } from "@manna/shared/lib/types";
 
 export const runtime = "nodejs";
 

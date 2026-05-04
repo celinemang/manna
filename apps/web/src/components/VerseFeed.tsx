@@ -4,9 +4,9 @@ import { useState } from "react";
 import { VerseCard } from "./VerseCard";
 import { shareVerseCard } from "@/lib/share";
 import { saveItem, removeByVerseId, useSaved } from "@/lib/saved";
-import type { Verse } from "@/lib/types";
-import type { Locale } from "@/i18n/config";
-import type { Dictionary } from "@/i18n/dictionaries";
+import type { Verse } from "@manna/shared/lib/types";
+import type { Locale } from "@manna/shared/i18n/config";
+import type { Dictionary } from "@manna/shared/i18n/dictionaries";
 
 type Props = { verses: Verse[]; locale: Locale; dict: Dictionary };
 

@@ -1,5 +1,5 @@
-import type { Verse } from "@/lib/types";
-import type { Locale } from "@/i18n/config";
+import type { Verse } from "@manna/shared/lib/types";
+import type { Locale } from "@manna/shared/i18n/config";
 
 type Props = {
   verse: Verse;

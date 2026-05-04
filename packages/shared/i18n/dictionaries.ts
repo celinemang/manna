@@ -36,6 +36,12 @@ type Dict = {
     remove: string;
     open: string;
   };
+  onboarding: {
+    skip: string;
+    continue: string;
+    begin: string;
+    steps: { kicker: string; title: string; body: string }[];
+  };
   emotions: Record<
     "anxious" | "lonely" | "tired" | "guilty" | "grateful" | "hopeful",
     { label: string; prompt: string }
@@ -80,6 +86,28 @@ const en: Dict = {
     empty: "Nothing saved yet. Tap Save on any verse to keep it here.",
     remove: "Remove",
     open: "Open",
+  },
+  onboarding: {
+    skip: "Skip",
+    continue: "Continue",
+    begin: "Begin",
+    steps: [
+      {
+        kicker: "Welcome",
+        title: "Scripture for\nyour heart.",
+        body: "Manna is a daily Bible verse companion. Open it any moment for a beautiful verse, a short prayer, and one small step.",
+      },
+      {
+        kicker: "Verses, daily",
+        title: "Swipe through\ndaily Scripture.",
+        body: "Beautiful verse cards, refreshed every day. Save the ones that speak to your heart, and share them with people you love.",
+      },
+      {
+        kicker: "Meet your heart",
+        title: "Tell us how\nyou feel.",
+        body: "When emotions feel heavy or full, choose a feeling. We'll meet you there with a verse, a prayer, and a small step.",
+      },
+    ],
   },
   emotions: {
     anxious: { label: "Anxious", prompt: "for an anxious heart" },
@@ -130,6 +158,28 @@ const ko: Dict = {
     empty: "아직 저장된 말씀이 없어요. 마음에 닿는 구절을 저장해 보세요.",
     remove: "삭제",
     open: "열기",
+  },
+  onboarding: {
+    skip: "건너뛰기",
+    continue: "계속",
+    begin: "시작하기",
+    steps: [
+      {
+        kicker: "환영합니다",
+        title: "오늘 마음에\n내려앉는 말씀.",
+        body: "만나는 매일의 말씀 동반자예요. 언제든 열어 짧은 말씀, 기도, 그리고 작은 한 걸음을 받아보세요.",
+      },
+      {
+        kicker: "매일의 말씀",
+        title: "말씀을 넘기며\n하루를 시작해요.",
+        body: "하루마다 새로운 말씀 카드. 마음에 닿은 구절은 저장하고, 사랑하는 사람과 나누세요.",
+      },
+      {
+        kicker: "마음을 만나다",
+        title: "지금 마음이\n어떠신가요?",
+        body: "감정이 무겁거나 벅찰 때, 한 가지를 골라보세요. 그 마음에 닿는 말씀과 기도, 그리고 작은 한 걸음을 드릴게요.",
+      },
+    ],
   },
   emotions: {
     anxious: { label: "불안할 때", prompt: "불안한 마음을 위해" },

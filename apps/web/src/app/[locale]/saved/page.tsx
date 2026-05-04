@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
-import { verses } from "@/data/verses";
+import { isLocale } from "@manna/shared/i18n/config";
+import { getDictionary } from "@manna/shared/i18n/dictionaries";
+import { verses } from "@manna/shared/data/verses";
 import { SavedList } from "./SavedList";
 
 export default async function SavedPage({

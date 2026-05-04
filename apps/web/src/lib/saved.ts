@@ -1,19 +1,11 @@
 "use client";
 
 import { useSyncExternalStore } from "react";
-import type { Locale } from "@/i18n/config";
-import type { Devotion, EmotionId } from "@/lib/types";
+import type { SavedItem } from "@manna/shared/lib/types";
+
+export type { SavedItem };
 
 const STORAGE_KEY = "manna:saved:v1";
-
-export type SavedItem = {
-  key: string;
-  verseId: string;
-  emotion?: EmotionId;
-  locale: Locale;
-  savedAt: number;
-  devotion?: Devotion;
-};
 
 const listeners = new Set<() => void>();
 const EMPTY: SavedItem[] = [];

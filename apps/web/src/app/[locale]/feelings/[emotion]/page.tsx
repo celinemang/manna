@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { emotionIds } from "@/data/emotions";
-import { versesByEmotion } from "@/data/verses";
-import { isLocale } from "@/i18n/config";
-import { getDictionary } from "@/i18n/dictionaries";
+import { emotionIds } from "@manna/shared/data/emotions";
+import { versesByEmotion } from "@manna/shared/data/verses";
+import { isLocale } from "@manna/shared/i18n/config";
+import { getDictionary } from "@manna/shared/i18n/dictionaries";
 import { EmotionResult } from "./EmotionResult";
-import type { EmotionId } from "@/lib/types";
+import type { EmotionId } from "@manna/shared/lib/types";
 
 export default async function EmotionPage({
   params,
