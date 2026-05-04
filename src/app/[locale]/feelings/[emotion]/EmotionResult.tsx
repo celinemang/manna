@@ -3,6 +3,11 @@
 import { useEffect, useState } from "react";
 import { VerseCard } from "@/components/VerseCard";
 import { shareVerseCard } from "@/lib/share";
+import {
+  removeByVerseId,
+  saveItem,
+  useSaved,
+} from "@/lib/saved";
 import type { Devotion, EmotionId, Verse } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -118,20 +123,69 @@ export function EmotionResult({ verses, emotion, locale, dict }: Props) {
         )}
       </section>
 
-      <div className="flex justify-center gap-3">
-        <button
-          onClick={() => setIndex(pickIndex(verses.length, index))}
-          className="rounded-full bg-[var(--card)] border border-[var(--card-border)] px-5 py-2 text-sm hover:bg-[var(--background)]"
-        >
-          {dict.result.anotherVerse}
-        </button>
-        <button
-          onClick={share}
-          className="rounded-full bg-[var(--foreground)] px-5 py-2 text-sm text-[var(--background)] hover:opacity-90"
-        >
-          {dict.result.share}
-        </button>
-      </div>
+      <ResultActions
+        verseId={verse.id}
+        emotion={emotion}
+        locale={locale}
+        devotion={devotion ?? undefined}
+        onAnotherVerse={() => setIndex(pickIndex(verses.length, index))}
+        onShare={share}
+        dict={dict}
+      />
+    </div>
+  );
+}
+
+function ResultActions({
+  verseId,
+  emotion,
+  locale,
+  devotion,
+  onAnotherVerse,
+  onShare,
+  dict,
+}: {
+  verseId: string;
+  emotion: EmotionId;
+  locale: Locale;
+  devotion?: Devotion;
+  onAnotherVerse: () => void;
+  onShare: () => void;
+  dict: Dictionary;
+}) {
+  const saved = useSaved();
+  const isSaved = saved.some((i) => i.verseId === verseId);
+
+  const toggle = () => {
+    if (isSaved) removeByVerseId(verseId);
+    else saveItem({ verseId, emotion, locale, devotion });
+  };
+
+  return (
+    <div className="flex flex-wrap justify-center gap-3">
+      <button
+        onClick={toggle}
+        aria-pressed={isSaved}
+        className={`rounded-full border px-5 py-2 text-sm transition ${
+          isSaved
+            ? "border-[var(--accent)] bg-[var(--accent)]/15 text-[var(--foreground)]"
+            : "border-[var(--card-border)] bg-[var(--card)] hover:bg-[var(--background)]"
+        }`}
+      >
+        {isSaved ? `♥ ${dict.feed.unsave}` : `♡ ${dict.feed.save}`}
+      </button>
+      <button
+        onClick={onAnotherVerse}
+        className="rounded-full bg-[var(--card)] border border-[var(--card-border)] px-5 py-2 text-sm hover:bg-[var(--background)]"
+      >
+        {dict.result.anotherVerse}
+      </button>
+      <button
+        onClick={onShare}
+        className="rounded-full bg-[var(--foreground)] px-5 py-2 text-sm text-[var(--background)] hover:opacity-90"
+      >
+        {dict.result.share}
+      </button>
     </div>
   );
 }

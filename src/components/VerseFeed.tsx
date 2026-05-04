@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { VerseCard } from "./VerseCard";
 import { shareVerseCard } from "@/lib/share";
+import { saveItem, removeByVerseId, useSaved } from "@/lib/saved";
 import type { Verse } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -85,20 +86,63 @@ export function VerseFeed({ verses, locale, dict }: Props) {
         </button>
       </div>
 
-      <div className="flex justify-center gap-3">
-        <button
-          onClick={copy}
-          className="rounded-full bg-[var(--card)] border border-[var(--card-border)] px-5 py-2 text-sm hover:bg-[var(--background)]"
-        >
-          {dict.feed.copy}
-        </button>
-        <button
-          onClick={share}
-          className="rounded-full bg-[var(--foreground)] px-5 py-2 text-sm text-[var(--background)] hover:opacity-90"
-        >
-          {dict.feed.share}
-        </button>
-      </div>
+      <SaveAndShareRow
+        verseId={verse.id}
+        locale={locale}
+        copy={copy}
+        share={share}
+        dict={dict}
+      />
+    </div>
+  );
+}
+
+function SaveAndShareRow({
+  verseId,
+  locale,
+  copy,
+  share,
+  dict,
+}: {
+  verseId: string;
+  locale: Locale;
+  copy: () => Promise<void>;
+  share: () => Promise<void>;
+  dict: Dictionary;
+}) {
+  const saved = useSaved();
+  const isSaved = saved.some((i) => i.verseId === verseId);
+
+  const toggle = () => {
+    if (isSaved) removeByVerseId(verseId);
+    else saveItem({ verseId, locale });
+  };
+
+  return (
+    <div className="flex justify-center gap-3">
+      <button
+        onClick={toggle}
+        className={`rounded-full border px-5 py-2 text-sm transition ${
+          isSaved
+            ? "border-[var(--accent)] bg-[var(--accent)]/15 text-[var(--foreground)]"
+            : "border-[var(--card-border)] bg-[var(--card)] hover:bg-[var(--background)]"
+        }`}
+        aria-pressed={isSaved}
+      >
+        {isSaved ? `♥ ${dict.feed.unsave}` : `♡ ${dict.feed.save}`}
+      </button>
+      <button
+        onClick={copy}
+        className="rounded-full bg-[var(--card)] border border-[var(--card-border)] px-5 py-2 text-sm hover:bg-[var(--background)]"
+      >
+        {dict.feed.copy}
+      </button>
+      <button
+        onClick={share}
+        className="rounded-full bg-[var(--foreground)] px-5 py-2 text-sm text-[var(--background)] hover:opacity-90"
+      >
+        {dict.feed.share}
+      </button>
     </div>
   );
 }

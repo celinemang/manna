@@ -3,7 +3,7 @@ import type { Locale } from "./config";
 type Dict = {
   appName: string;
   tagline: string;
-  nav: { today: string; feelings: string };
+  nav: { today: string; feelings: string; saved: string };
   home: { eyebrow: string; heading: string };
   feelings: {
     eyebrow: string;
@@ -21,7 +21,21 @@ type Dict = {
     loadingDevotion: string;
     devotionError: string;
   };
-  feed: { previous: string; next: string; copy: string; share: string };
+  feed: {
+    previous: string;
+    next: string;
+    copy: string;
+    share: string;
+    save: string;
+    unsave: string;
+  };
+  saved: {
+    eyebrow: string;
+    heading: string;
+    empty: string;
+    remove: string;
+    open: string;
+  };
   emotions: Record<
     "anxious" | "lonely" | "tired" | "guilty" | "grateful" | "hopeful",
     { label: string; prompt: string }
@@ -33,7 +47,7 @@ type Dict = {
 const en: Dict = {
   appName: "Manna",
   tagline: "Scripture for your heart, one moment at a time.",
-  nav: { today: "Today", feelings: "Feelings" },
+  nav: { today: "Today", feelings: "Feelings", saved: "Saved" },
   home: { eyebrow: "Manna", heading: "A verse for today" },
   feelings: {
     eyebrow: "Feelings",
@@ -52,7 +66,21 @@ const en: Dict = {
     devotionError:
       "We couldn't prepare a reflection right now. The verse is still here for you.",
   },
-  feed: { previous: "Previous", next: "Next", copy: "Copy", share: "Share" },
+  feed: {
+    previous: "Previous",
+    next: "Next",
+    copy: "Copy",
+    share: "Share",
+    save: "Save",
+    unsave: "Saved",
+  },
+  saved: {
+    eyebrow: "Saved",
+    heading: "Verses you've kept",
+    empty: "Nothing saved yet. Tap Save on any verse to keep it here.",
+    remove: "Remove",
+    open: "Open",
+  },
   emotions: {
     anxious: { label: "Anxious", prompt: "for an anxious heart" },
     lonely: { label: "Lonely", prompt: "when you feel alone" },
@@ -69,7 +97,7 @@ const en: Dict = {
 const ko: Dict = {
   appName: "만나",
   tagline: "오늘, 마음에 닿는 한 구절.",
-  nav: { today: "오늘", feelings: "마음" },
+  nav: { today: "오늘", feelings: "마음", saved: "저장" },
   home: { eyebrow: "만나", heading: "오늘의 말씀" },
   feelings: {
     eyebrow: "마음",
@@ -88,7 +116,21 @@ const ko: Dict = {
     devotionError:
       "지금은 묵상을 준비하지 못했어요. 말씀은 여전히 당신과 함께 있습니다.",
   },
-  feed: { previous: "이전", next: "다음", copy: "복사", share: "공유" },
+  feed: {
+    previous: "이전",
+    next: "다음",
+    copy: "복사",
+    share: "공유",
+    save: "저장",
+    unsave: "저장됨",
+  },
+  saved: {
+    eyebrow: "저장",
+    heading: "내가 간직한 말씀",
+    empty: "아직 저장된 말씀이 없어요. 마음에 닿는 구절을 저장해 보세요.",
+    remove: "삭제",
+    open: "열기",
+  },
   emotions: {
     anxious: { label: "불안할 때", prompt: "불안한 마음을 위해" },
     lonely: { label: "외로울 때", prompt: "혼자라 느낄 때" },

@@ -49,6 +49,14 @@ export default async function LocaleLayout({
               {dict.nav.feelings}
             </Link>
           </li>
+          <li>
+            <Link
+              href={`/${locale}/saved`}
+              className="hover:text-[var(--foreground)]"
+            >
+              {dict.nav.saved}
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>
