@@ -1,4 +1,5 @@
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
+import Svg, { Path } from "react-native-svg";
 import type { Verse, EmotionMeta } from "@manna/shared/lib/types";
 import type { Locale } from "@manna/shared/i18n/config";
 import { Glyph } from "./Glyph";
@@ -8,12 +9,21 @@ type Props = {
   emotion: EmotionMeta;
   emotionLabel: string;
   locale: Locale;
+  saved?: boolean;
+  onToggleSave?: () => void;
 };
 
 // Single verse card. Background tinted by emotion. Designer reference:
 // VerseCard component in screens.jsx — large quote glyph in the corner,
 // serif body, tiny ornament before the reference, NIV/WEB pill top-right.
-export function VerseCard({ verse, emotion, emotionLabel, locale }: Props) {
+export function VerseCard({
+  verse,
+  emotion,
+  emotionLabel,
+  locale,
+  saved,
+  onToggleSave,
+}: Props) {
   const text = verse.text[locale] ?? verse.text.en;
   const reference = verse.reference[locale] ?? verse.reference.en;
   const translation = verse.translation[locale] ?? verse.translation.en;
@@ -70,17 +80,38 @@ export function VerseCard({ verse, emotion, emotionLabel, locale }: Props) {
             {emotionLabel}
           </Text>
         </View>
-        <Text
-          style={{
-            fontFamily: "Inter_500Medium",
-            fontSize: 11,
-            color: emotion.ink,
-            opacity: 0.55,
-            letterSpacing: 1.4,
-          }}
-        >
-          {translation}
-        </Text>
+        <View style={{ alignItems: "flex-end", gap: 6 }}>
+          {onToggleSave ? (
+            <Pressable
+              onPress={onToggleSave}
+              hitSlop={12}
+              accessibilityLabel={saved ? "Saved" : "Save"}
+              style={{ width: 28, height: 28, alignItems: "center", justifyContent: "center" }}
+            >
+              <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
+                <Path
+                  d="M6 4h12v17l-6-4-6 4z"
+                  stroke={emotion.ink}
+                  strokeWidth={1.6}
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill={saved ? emotion.ink : "none"}
+                />
+              </Svg>
+            </Pressable>
+          ) : null}
+          <Text
+            style={{
+              fontFamily: "Inter_500Medium",
+              fontSize: 11,
+              color: emotion.ink,
+              opacity: 0.55,
+              letterSpacing: 1.4,
+            }}
+          >
+            {translation}
+          </Text>
+        </View>
       </View>
 
       {/* Verse */}

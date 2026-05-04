@@ -9,12 +9,14 @@ import { SwipeStack } from "../../components/SwipeStack";
 import { VerseCard } from "../../components/VerseCard";
 import { Wordmark } from "../../components/Wordmark";
 import { useLocale } from "../../lib/useLocale";
+import { removeByVerseId, saveItem, useSaved } from "../../lib/saved";
 
 export default function Today() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { locale } = useLocale();
   const [index, setIndex] = useState(0);
+  const { items: savedItems } = useSaved();
 
   // Stable shuffled order per session — feels more "today" than always
   // starting at anxious-001. Real "today's verse" logic comes in Phase 4
@@ -58,12 +60,19 @@ export default function Today() {
           renderCard={(verse) => {
             const meta = getEmotion(verse.emotion);
             if (!meta) return null;
+            const saved = savedItems.some((i) => i.verseId === verse.id);
+            const onToggleSave = () => {
+              if (saved) void removeByVerseId(verse.id);
+              else void saveItem({ verseId: verse.id, emotion: verse.emotion, locale });
+            };
             return (
               <VerseCard
                 verse={verse}
                 emotion={meta}
                 emotionLabel={t(`emotions.${verse.emotion as EmotionId}.label`)}
                 locale={locale}
+                saved={saved}
+                onToggleSave={onToggleSave}
               />
             );
           }}

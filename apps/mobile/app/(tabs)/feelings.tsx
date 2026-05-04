@@ -51,7 +51,7 @@ export default function Feelings() {
       </View>
 
       <ScrollView
-        contentContainerStyle={{ padding: 22, paddingBottom: 40 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 40 }}
         showsVerticalScrollIndicator={false}
       >
         <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
@@ -64,21 +64,22 @@ export default function Feelings() {
                 onPress={() => router.push(`/feelings/${em.id}`)}
                 style={({ pressed }) => ({
                   width: "48.5%",
-                  minHeight: 116,
-                  padding: 16,
-                  paddingTop: 18,
-                  borderRadius: 18,
+                  minHeight: 168,
+                  padding: 20,
+                  paddingTop: 22,
+                  paddingBottom: 18,
+                  borderRadius: 22,
                   backgroundColor: em.bg,
                   justifyContent: "space-between",
                   opacity: pressed ? 0.85 : 1,
                 })}
               >
-                <Glyph kind={em.glyph} size={28} color={em.ink} strokeWidth={1.4} />
+                <Glyph kind={em.glyph} size={34} color={em.ink} strokeWidth={1.4} />
                 <View>
                   <Text
                     style={{
                       fontFamily: "CormorantGaramond_500Medium",
-                      fontSize: 22,
+                      fontSize: 24,
                       color: em.ink,
                       letterSpacing: -0.2,
                     }}
@@ -87,9 +88,10 @@ export default function Feelings() {
                   </Text>
                   <Text
                     style={{
-                      marginTop: 2,
+                      marginTop: 4,
                       fontFamily: "Inter_400Regular",
-                      fontSize: 11,
+                      fontSize: 12,
+                      lineHeight: 18,
                       color: em.ink,
                       opacity: 0.6,
                       letterSpacing: 0.4,
