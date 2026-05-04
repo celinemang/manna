@@ -12,6 +12,7 @@ import {
   getReminderState,
   scheduleDailyReminder,
 } from "../../lib/notifications";
+import { useLocale } from "../../lib/useLocale";
 
 const CREAM = "#F4ECDF";
 const INK = "#3A2E22";
@@ -20,6 +21,7 @@ const HAIRLINE = "#D9CBB1";
 
 export default function You() {
   const { t } = useTranslation();
+  const { locale, setLocale } = useLocale();
   const journey = useJourney();
   const [reminderOn, setReminderOn] = useState(false);
   const [hour, setHour] = useState(8);
@@ -255,6 +257,41 @@ export default function You() {
           <Row
             label={t("settings.translation")}
             right={<Text style={rowValue}>{t("settings.translationValue")}</Text>}
+          />
+          <Row
+            label={t("settings.language")}
+            right={
+              <View style={{ flexDirection: "row", gap: 6 }}>
+                {(["en", "ko"] as const).map((code) => {
+                  const active = locale === code;
+                  return (
+                    <Pressable
+                      key={code}
+                      onPress={() => void setLocale(code)}
+                      style={{
+                        paddingHorizontal: 12,
+                        paddingVertical: 6,
+                        borderRadius: 999,
+                        backgroundColor: active ? INK : "transparent",
+                        borderWidth: 1,
+                        borderColor: active ? INK : HAIRLINE,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "Inter_500Medium",
+                          fontSize: 12,
+                          color: active ? CREAM : SUB,
+                          letterSpacing: 0.4,
+                        }}
+                      >
+                        {code === "en" ? "EN" : "한국어"}
+                      </Text>
+                    </Pressable>
+                  );
+                })}
+              </View>
+            }
           />
         </Group>
 

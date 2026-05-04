@@ -19,6 +19,11 @@ import {
   NotoSerifKR_400Regular,
   NotoSerifKR_500Medium,
 } from "@expo-google-fonts/noto-serif-kr";
+import {
+  NotoSansKR_400Regular,
+  NotoSansKR_500Medium,
+  NotoSansKR_600SemiBold,
+} from "@expo-google-fonts/noto-sans-kr";
 import "../lib/i18n";
 import "../global.css";
 import { touchStreak } from "../lib/journey";
@@ -35,6 +40,9 @@ export default function RootLayout() {
     Inter_600SemiBold,
     NotoSerifKR_400Regular,
     NotoSerifKR_500Medium,
+    NotoSansKR_400Regular,
+    NotoSansKR_500Medium,
+    NotoSansKR_600SemiBold,
   });
 
   useEffect(() => {

@@ -3,6 +3,7 @@ import Svg, { Path } from "react-native-svg";
 import type { Verse, EmotionMeta } from "@manna/shared/lib/types";
 import type { Locale } from "@manna/shared/i18n/config";
 import { Glyph } from "./Glyph";
+import { serifMedium } from "../lib/typography";
 
 type Props = {
   verse: Verse;
@@ -118,7 +119,7 @@ export function VerseCard({
       <View style={{ gap: 18 }}>
         <Text
           style={{
-            fontFamily: "CormorantGaramond_500Medium",
+            fontFamily: serifMedium(locale),
             fontSize: 86,
             color: emotion.ink,
             opacity: 0.18,
@@ -130,7 +131,7 @@ export function VerseCard({
         </Text>
         <Text
           style={{
-            fontFamily: "CormorantGaramond_500Medium",
+            fontFamily: serifMedium(locale),
             fontSize: isLong ? 22 : 26,
             lineHeight: isLong ? 31 : 36,
             color: emotion.ink,

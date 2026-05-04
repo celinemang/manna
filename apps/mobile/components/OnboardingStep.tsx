@@ -6,6 +6,8 @@ import Svg, { Path } from "react-native-svg";
 import { Glyph } from "./Glyph";
 import { Wordmark } from "./Wordmark";
 import { setOnboarded } from "../lib/onboarding";
+import { useLocale } from "../lib/useLocale";
+import { serifMedium } from "../lib/typography";
 
 type Props = {
   step: 0 | 1 | 2;
@@ -16,6 +18,7 @@ const GLYPHS = ["wheat", "spark", "sun"] as const;
 
 export function OnboardingStep({ step, nextHref }: Props) {
   const { t } = useTranslation();
+  const { locale } = useLocale();
   const insets = useSafeAreaInsets();
   const router = useRouter();
   const data = t(`onboarding.steps.${step}`, { returnObjects: true }) as {
@@ -96,7 +99,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         </Text>
         <Text
           style={{
-            fontFamily: "CormorantGaramond_500Medium",
+            fontFamily: serifMedium(locale),
             fontSize: 40,
             lineHeight: 46,
             color: "#3A2E22",

@@ -9,6 +9,7 @@ import { getVerseById } from "@manna/shared/data/verses";
 import { getEmotion } from "@manna/shared/data/emotions";
 import type { EmotionId } from "@manna/shared/lib/types";
 import { useLocale } from "../../lib/useLocale";
+import { serifMedium } from "../../lib/typography";
 
 type Style = {
   id: string;
@@ -147,7 +148,7 @@ export default function ShareModal() {
             <View style={{ gap: 14 }}>
               <Text
                 style={{
-                  fontFamily: "CormorantGaramond_500Medium",
+                  fontFamily: serifMedium(locale),
                   fontSize: 64,
                   lineHeight: 40,
                   color: style.ink,
@@ -159,7 +160,7 @@ export default function ShareModal() {
               </Text>
               <Text
                 style={{
-                  fontFamily: "CormorantGaramond_500Medium",
+                  fontFamily: serifMedium(locale),
                   fontSize: text.length > 180 ? 17 : 20,
                   lineHeight: text.length > 180 ? 24 : 28,
                   color: style.ink,

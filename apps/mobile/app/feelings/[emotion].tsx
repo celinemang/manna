@@ -10,6 +10,7 @@ import type { Devotion, EmotionId, Verse } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
 import { fetchDevotion } from "../../lib/devotion";
 import { useLocale } from "../../lib/useLocale";
+import { serifItalic, serifMedium } from "../../lib/typography";
 import { recordMood } from "../../lib/journey";
 import {
   removeByVerseId,
@@ -191,7 +192,7 @@ export default function EmotionResult() {
               position: "absolute",
               top: 8,
               left: 18,
-              fontFamily: "CormorantGaramond_500Medium",
+              fontFamily: serifMedium(locale),
               fontSize: 90,
               color: meta.ink,
               opacity: 0.16,
@@ -202,7 +203,7 @@ export default function EmotionResult() {
           </Text>
           <Text
             style={{
-              fontFamily: "CormorantGaramond_500Medium",
+              fontFamily: serifMedium(locale),
               fontSize: 22,
               lineHeight: 31,
               color: meta.ink,
@@ -249,7 +250,7 @@ export default function EmotionResult() {
           <Text
             style={{
               marginTop: 30,
-              fontFamily: "CormorantGaramond_500Medium_Italic",
+              fontFamily: serifItalic(locale),
               fontSize: 16,
               color: "#8A7A66",
               lineHeight: 24,
@@ -262,7 +263,17 @@ export default function EmotionResult() {
         {status === "ready" && devotion && (
           <>
             <Section label={t("result.reflectionLabel")}>
-              <Text style={bodyStyle}>{devotion.reflection}</Text>
+              <Text
+                style={{
+                  marginTop: 12,
+                  fontFamily: serifMedium(locale),
+                  fontSize: 17,
+                  lineHeight: 27,
+                  color: "#3A2E22",
+                }}
+              >
+                {devotion.reflection}
+              </Text>
             </Section>
             <Section label={t("result.prayerLabel")}>
               <View
@@ -276,7 +287,7 @@ export default function EmotionResult() {
               >
                 <Text
                   style={{
-                    fontFamily: "CormorantGaramond_500Medium_Italic",
+                    fontFamily: serifItalic(locale),
                     fontSize: 16.5,
                     lineHeight: 27,
                     color: "#5A4A38",
@@ -410,14 +421,6 @@ export default function EmotionResult() {
     </SafeAreaView>
   );
 }
-
-const bodyStyle = {
-  marginTop: 12,
-  fontFamily: "CormorantGaramond_500Medium",
-  fontSize: 17,
-  lineHeight: 27,
-  color: "#3A2E22",
-} as const;
 
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
