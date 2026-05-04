@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
+import { GoogleGenAI, Type } from "@google/genai";
 import { z } from "zod";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
 import { getVerseById } from "@/data/verses";
 import { isLocale, type Locale } from "@/i18n/config";
 import type { EmotionId } from "@/lib/types";
@@ -64,7 +63,7 @@ Generate the reflection, prayer, and action step in ${language}.`;
 }
 
 export async function POST(req: Request) {
-  if (!process.env.ANTHROPIC_API_KEY) {
+  if (!process.env.GEMINI_API_KEY) {
     return NextResponse.json(
       { error: "Server is not configured for AI devotions yet." },
       { status: 503 },
@@ -93,46 +92,47 @@ export async function POST(req: Request) {
     return NextResponse.json({ error: "verse_not_found" }, { status: 404 });
   }
 
-  const client = new Anthropic();
+  const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
   try {
-    const response = await client.messages.parse({
-      model: "claude-opus-4-7",
-      max_tokens: 1500,
-      system: SYSTEM_PROMPT,
-      thinking: { type: "adaptive" },
-      output_config: {
-        format: zodOutputFormat(DevotionSchema),
-        effort: "low",
-      },
-      messages: [
-        {
-          role: "user",
-          content: buildUserPrompt({
-            emotion,
-            reference: verse.reference[locale],
-            text: verse.text[locale],
-            locale,
-          }),
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-flash",
+      contents: buildUserPrompt({
+        emotion,
+        reference: verse.reference[locale],
+        text: verse.text[locale],
+        locale,
+      }),
+      config: {
+        systemInstruction: SYSTEM_PROMPT,
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            reflection: { type: Type.STRING },
+            prayer: { type: Type.STRING },
+            actionStep: { type: Type.STRING },
+          },
+          required: ["reflection", "prayer", "actionStep"],
+          propertyOrdering: ["reflection", "prayer", "actionStep"],
         },
-      ],
+      },
     });
 
-    if (!response.parsed_output) {
-      return NextResponse.json(
-        { error: "no_parsed_output" },
-        { status: 502 },
-      );
+    const text = response.text;
+    if (!text) {
+      return NextResponse.json({ error: "no_output" }, { status: 502 });
     }
 
-    return NextResponse.json(response.parsed_output);
-  } catch (err) {
-    if (err instanceof Anthropic.APIError) {
-      return NextResponse.json(
-        { error: "anthropic_error", status: err.status },
-        { status: 502 },
-      );
+    const json = JSON.parse(text);
+    const validated = DevotionSchema.safeParse(json);
+    if (!validated.success) {
+      return NextResponse.json({ error: "invalid_output" }, { status: 502 });
     }
-    return NextResponse.json({ error: "unknown" }, { status: 500 });
+
+    return NextResponse.json(validated.data);
+  } catch (err) {
+    console.error("[/api/devotion] Gemini error:", err);
+    return NextResponse.json({ error: "gemini_error" }, { status: 502 });
   }
 }
