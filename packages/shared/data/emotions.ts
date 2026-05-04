@@ -1,4 +1,4 @@
-import type { EmotionId } from "@/lib/types";
+import type { EmotionId } from "../lib/types";
 
 export const emotionIds: EmotionId[] = [
   "anxious",

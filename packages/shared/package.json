@@ -1,0 +1,14 @@
+{
+  "name": "@manna/shared",
+  "version": "0.1.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    "./data/verses": "./data/verses.ts",
+    "./data/emotions": "./data/emotions.ts",
+    "./i18n/config": "./i18n/config.ts",
+    "./i18n/dictionaries": "./i18n/dictionaries.ts",
+    "./lib/types": "./lib/types.ts"
+  }
+}

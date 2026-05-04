@@ -1,4 +1,4 @@
-import type { Verse } from "@/lib/types";
+import type { Verse } from "../lib/types";
 
 // English: World English Bible (WEB) — public domain.
 // Korean:  개역한글 (1961) — public domain in Korea.
