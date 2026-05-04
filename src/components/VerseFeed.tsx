@@ -3,25 +3,26 @@
 import { useState } from "react";
 import { VerseCard } from "./VerseCard";
 import type { Verse } from "@/lib/types";
+import type { Locale } from "@/i18n/config";
+import type { Dictionary } from "@/i18n/dictionaries";
 
-type Props = { verses: Verse[] };
+type Props = { verses: Verse[]; locale: Locale; dict: Dictionary };
 
-export function VerseFeed({ verses }: Props) {
+export function VerseFeed({ verses, locale, dict }: Props) {
   const [index, setIndex] = useState(0);
   const verse = verses[index];
 
   const next = () => setIndex((i) => (i + 1) % verses.length);
   const prev = () => setIndex((i) => (i - 1 + verses.length) % verses.length);
 
+  const formatted = `“${verse.text[locale]}”\n— ${verse.reference[locale]}`;
+
   const copy = async () => {
-    await navigator.clipboard.writeText(`"${verse.text}"\n— ${verse.reference}`);
+    await navigator.clipboard.writeText(formatted);
   };
 
   const share = async () => {
-    const data = {
-      title: "Manna",
-      text: `"${verse.text}" — ${verse.reference}`,
-    };
+    const data = { title: dict.appName, text: formatted };
     if (navigator.share) {
       try {
         await navigator.share(data);
@@ -62,7 +63,7 @@ export function VerseFeed({ verses }: Props) {
           }
         }}
       >
-        <VerseCard verse={verse} />
+        <VerseCard verse={verse} locale={locale} />
       </div>
 
       <div className="flex items-center justify-between text-sm text-[var(--muted)]">
@@ -70,7 +71,7 @@ export function VerseFeed({ verses }: Props) {
           onClick={prev}
           className="rounded-full border border-[var(--card-border)] px-4 py-2 hover:bg-[var(--card)]"
         >
-          ← Previous
+          ← {dict.feed.previous}
         </button>
         <span className="text-xs uppercase tracking-widest">
           {index + 1} / {verses.length}
@@ -79,7 +80,7 @@ export function VerseFeed({ verses }: Props) {
           onClick={next}
           className="rounded-full border border-[var(--card-border)] px-4 py-2 hover:bg-[var(--card)]"
         >
-          Next →
+          {dict.feed.next} →
         </button>
       </div>
 
@@ -88,13 +89,13 @@ export function VerseFeed({ verses }: Props) {
           onClick={copy}
           className="rounded-full bg-[var(--card)] border border-[var(--card-border)] px-5 py-2 text-sm hover:bg-[var(--background)]"
         >
-          Copy
+          {dict.feed.copy}
         </button>
         <button
           onClick={share}
           className="rounded-full bg-[var(--foreground)] px-5 py-2 text-sm text-[var(--background)] hover:opacity-90"
         >
-          Share
+          {dict.feed.share}
         </button>
       </div>
     </div>

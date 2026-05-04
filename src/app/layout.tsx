@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Cormorant_Garamond } from "next/font/google";
-import Link from "next/link";
+import { Inter, Cormorant_Garamond, Noto_Serif_KR } from "next/font/google";
 import "./globals.css";
 
 const sans = Inter({
@@ -15,6 +14,12 @@ const serif = Cormorant_Garamond({
   style: ["normal", "italic"],
 });
 
+const serifKo = Noto_Serif_KR({
+  variable: "--font-serif-ko",
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+});
+
 export const metadata: Metadata = {
   title: "Manna — Scripture for your heart",
   description:
@@ -26,26 +31,9 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html
-      lang="en"
-      className={`${sans.variable} ${serif.variable} h-full antialiased`}
+      className={`${sans.variable} ${serif.variable} ${serifKo.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <main className="flex-1 flex flex-col">{children}</main>
-        <nav className="sticky bottom-0 border-t border-[var(--card-border)] bg-[var(--background)]/90 backdrop-blur">
-          <ul className="mx-auto flex max-w-md justify-around py-3 text-xs uppercase tracking-widest text-[var(--muted)]">
-            <li>
-              <Link href="/" className="hover:text-[var(--foreground)]">
-                Today
-              </Link>
-            </li>
-            <li>
-              <Link href="/feelings" className="hover:text-[var(--foreground)]">
-                Feelings
-              </Link>
-            </li>
-          </ul>
-        </nav>
-      </body>
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }

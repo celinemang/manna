@@ -1,3 +1,5 @@
+import type { Locale } from "@/i18n/config";
+
 export type EmotionId =
   | "anxious"
   | "lonely"
@@ -6,17 +8,19 @@ export type EmotionId =
   | "grateful"
   | "hopeful";
 
-export type Emotion = {
-  id: EmotionId;
-  label: string;
-  prompt: string;
-};
+export type LocalizedText = Record<Locale, string>;
 
 export type Verse = {
   id: string;
   emotion: EmotionId;
-  reference: string;
-  text: string;
-  translation: string;
+  reference: LocalizedText;
+  text: LocalizedText;
+  translation: LocalizedText;
   tags: string[];
+};
+
+export type Devotion = {
+  reflection: string;
+  prayer: string;
+  actionStep: string;
 };
