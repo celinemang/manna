@@ -9,7 +9,9 @@ import type { EmotionId } from "@manna/shared/lib/types";
 import { SwipeStack } from "../../components/SwipeStack";
 import { VerseCard } from "../../components/VerseCard";
 import { Wordmark } from "../../components/Wordmark";
+import { PaperGrain } from "../../components/PaperGrain";
 import { useLocale } from "../../lib/useLocale";
+import { tokens } from "../../lib/tokens";
 import { removeByVerseId, saveItem, useSaved } from "../../lib/saved";
 
 export default function Today() {
@@ -39,7 +41,8 @@ export default function Today() {
   const emotionLabel = t(`emotions.${current.emotion as EmotionId}.label`);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#1F1812" }}>
+    <View style={{ flex: 1, backgroundColor: tokens.night }}>
+      <PaperGrain color={tokens.cream} opacity={0.04} />
       {/* Top chrome */}
       <View
         style={{
@@ -51,7 +54,7 @@ export default function Today() {
           justifyContent: "space-between",
         }}
       >
-        <Wordmark size={18} color="#F4ECDF" />
+        <Wordmark size={18} color="#F5EBD7" />
       </View>
 
       {/* Card stack */}
@@ -107,7 +110,7 @@ export default function Today() {
               height: i === index % 8 ? 16 : 4,
               borderRadius: 999,
               backgroundColor:
-                i === index % 8 ? "#F4ECDF" : "rgba(244,236,223,0.3)",
+                i === index % 8 ? "#F5EBD7" : "rgba(244,236,223,0.3)",
             }}
           />
         ))}
@@ -126,7 +129,7 @@ export default function Today() {
       >
         <Text
           style={{
-            fontFamily: "Inter_500Medium",
+            fontFamily: "InterTight_500Medium",
             fontSize: 11,
             color: "rgba(244,236,223,0.45)",
             letterSpacing: 1,

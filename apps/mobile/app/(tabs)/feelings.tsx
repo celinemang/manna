@@ -5,8 +5,10 @@ import { useRouter } from "expo-router";
 import { emotions } from "@manna/shared/data/emotions";
 import type { EmotionId } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
+import { PaperGrain } from "../../components/PaperGrain";
 import { useLocale } from "../../lib/useLocale";
 import { serifMedium } from "../../lib/typography";
+import { tokens } from "../../lib/tokens";
 
 export default function Feelings() {
   const { t } = useTranslation();
@@ -21,11 +23,12 @@ export default function Feelings() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F4ECDF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
+      <PaperGrain />
       <View style={{ paddingHorizontal: 28, paddingTop: 4, paddingBottom: 8 }}>
         <Text
           style={{
-            fontFamily: "Inter_500Medium",
+            fontFamily: "InterTight_500Medium",
             fontSize: 12,
             color: "#8A7A66",
             letterSpacing: 1.6,
@@ -39,7 +42,7 @@ export default function Feelings() {
             marginTop: 6,
             fontFamily: serifMedium(locale),
             fontSize: 30,
-            color: "#3A2E22",
+            color: "#2A211A",
             letterSpacing: -0.3,
             lineHeight: 36,
           }}
@@ -49,7 +52,7 @@ export default function Feelings() {
         <Text
           style={{
             marginTop: 8,
-            fontFamily: "Inter_400Regular",
+            fontFamily: "InterTight_400Regular",
             fontSize: 13,
             lineHeight: 20,
             color: "#8A7A66",
@@ -96,7 +99,7 @@ export default function Feelings() {
                     <Text
                       style={{
                         marginTop: 4,
-                        fontFamily: "Inter_400Regular",
+                        fontFamily: "InterTight_400Regular",
                         fontSize: 12,
                         lineHeight: 18,
                         color: em.ink,

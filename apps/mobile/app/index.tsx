@@ -33,13 +33,13 @@ export default function Splash() {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#F4ECDF",
+        backgroundColor: "#F5EBD7",
         alignItems: "center",
         justifyContent: "center",
         gap: 18,
       }}
     >
-      <Wordmark size={44} color="#3A2E22" />
+      <Wordmark size={44} color="#2A211A" />
       <Text
         style={{
           fontFamily: "CormorantGaramond_500Medium_Italic",

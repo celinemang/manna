@@ -23,7 +23,7 @@ type Props = {
   strokeWidth?: number;
 };
 
-export function Glyph({ kind, size = 48, color = "#3A2E22", strokeWidth = 1.4 }: Props) {
+export function Glyph({ kind, size = 48, color = "#2A211A", strokeWidth = 1.4 }: Props) {
   const stroke = {
     stroke: color,
     strokeWidth,

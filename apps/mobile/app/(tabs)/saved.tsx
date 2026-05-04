@@ -13,8 +13,10 @@ import { emotions, getEmotion } from "@manna/shared/data/emotions";
 import { getVerseById } from "@manna/shared/data/verses";
 import type { EmotionId } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
+import { PaperGrain } from "../../components/PaperGrain";
 import { useLocale } from "../../lib/useLocale";
 import { serifMedium } from "../../lib/typography";
+import { tokens } from "../../lib/tokens";
 import { removeItem, useSaved } from "../../lib/saved";
 
 const KO_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
@@ -48,7 +50,8 @@ export default function Saved() {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#F4ECDF" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
+      <PaperGrain />
       <View
         style={{
           paddingHorizontal: 28,
@@ -68,7 +71,7 @@ export default function Saved() {
             <Text
               style={{
                 marginTop: 8,
-                fontFamily: "Inter_400Regular",
+                fontFamily: "InterTight_400Regular",
                 fontSize: 13,
                 color: "#8A7A66",
                 letterSpacing: 0.2,
@@ -85,10 +88,10 @@ export default function Saved() {
           style={{ width: 36, height: 36, alignItems: "center", justifyContent: "center" }}
         >
           <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
-            <Circle cx={11} cy={11} r={7} stroke="#3A2E22" strokeWidth={1.6} />
+            <Circle cx={11} cy={11} r={7} stroke="#2A211A" strokeWidth={1.6} />
             <Path
               d="M20 20l-3.5-3.5"
-              stroke="#3A2E22"
+              stroke="#2A211A"
               strokeWidth={1.6}
               strokeLinecap="round"
             />
@@ -96,12 +99,12 @@ export default function Saved() {
         </Pressable>
       </View>
 
-      {/* Filter chips */}
+      {/* Filter chips — short pill row, height 32 */}
       {items.length > 0 && (
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 22, paddingVertical: 10, gap: 8 }}
+          contentContainerStyle={{ paddingHorizontal: 22, paddingVertical: 8, gap: 6 }}
         >
           <Chip
             label={locale === "ko" ? "전체" : "All"}
@@ -152,13 +155,16 @@ export default function Saved() {
           </View>
         )}
 
-        <View style={{ flexDirection: "row", flexWrap: "wrap", gap: 10 }}>
+        {/* Vertical list — one verse per row */}
+        <View style={{ gap: 10 }}>
           {filtered.map((item) => {
             const verse = getVerseById(item.verseId);
             const meta = item.emotion ? getEmotion(item.emotion) : undefined;
             if (!verse || !meta) return null;
             const reference = verse.reference[locale] ?? verse.reference.en;
             const emotionLabel = t(`emotions.${meta.id as EmotionId}.label`);
+            const text = verse.text[locale] ?? verse.text.en;
+            const preview = text.length > 80 ? `${text.slice(0, 78)}…` : text;
             return (
               <Pressable
                 key={item.key}
@@ -170,59 +176,82 @@ export default function Saved() {
                 }
                 onLongPress={() => removeItem(item.key)}
                 style={({ pressed }) => ({
-                  width: "48.5%",
-                  aspectRatio: 1,
+                  flexDirection: "row",
+                  gap: 14,
                   padding: 16,
                   borderRadius: 18,
-                  backgroundColor: meta.bg,
-                  justifyContent: "space-between",
-                  opacity: pressed ? 0.85 : 1,
+                  backgroundColor: tokens.card,
+                  borderWidth: 1,
+                  borderColor: tokens.hairline,
+                  opacity: pressed ? 0.88 : 1,
                 })}
               >
                 <View
                   style={{
-                    flexDirection: "row",
+                    width: 44,
+                    height: 44,
+                    borderRadius: 12,
+                    backgroundColor: meta.bg,
                     alignItems: "center",
-                    justifyContent: "space-between",
+                    justifyContent: "center",
                   }}
                 >
-                  <Glyph kind={meta.glyph} size={18} color={meta.ink} strokeWidth={1.5} />
-                  <Text
+                  <Glyph kind={meta.glyph} size={22} color={meta.ink} strokeWidth={1.5} />
+                </View>
+                <View style={{ flex: 1, gap: 4 }}>
+                  <View
                     style={{
-                      fontFamily: "Inter_500Medium",
-                      fontSize: 11,
-                      color: meta.ink,
-                      opacity: 0.55,
-                      letterSpacing: 0.4,
+                      flexDirection: "row",
+                      justifyContent: "space-between",
+                      alignItems: "baseline",
+                      gap: 8,
                     }}
                   >
-                    {formatDate(item.savedAt)}
-                  </Text>
-                </View>
-                <View>
+                    <Text
+                      style={{
+                        fontFamily: serifMedium(locale),
+                        fontSize: 17,
+                        lineHeight: 22,
+                        color: tokens.ink,
+                        letterSpacing: -0.2,
+                      }}
+                      numberOfLines={1}
+                    >
+                      {reference}
+                    </Text>
+                    <Text
+                      style={{
+                        fontFamily: "InterTight_500Medium",
+                        fontSize: 11,
+                        color: tokens.ink3,
+                        letterSpacing: 0.2,
+                      }}
+                    >
+                      {formatDate(item.savedAt)}
+                    </Text>
+                  </View>
                   <Text
                     style={{
-                      fontFamily: "Inter_500Medium",
-                      fontSize: 11,
-                      color: meta.ink,
-                      opacity: 0.6,
-                      letterSpacing: 0.4,
+                      fontFamily: "InterTight_500Medium",
+                      fontSize: 10.5,
+                      color: tokens.ink3,
+                      letterSpacing: 1.4,
+                      textTransform: "uppercase",
                     }}
                   >
                     {emotionLabel}
                   </Text>
                   <Text
                     style={{
-                      marginTop: 4,
+                      marginTop: 2,
                       fontFamily: serifMedium(locale),
-                      fontSize: 22,
-                      lineHeight: 28,
-                      color: meta.ink,
-                      letterSpacing: -0.2,
+                      fontSize: 13.5,
+                      lineHeight: 20,
+                      color: tokens.ink2,
                     }}
                     numberOfLines={2}
                   >
-                    {reference}
+                    {preview}
                   </Text>
                 </View>
               </Pressable>
@@ -247,19 +276,20 @@ function Chip({
     <Pressable
       onPress={onPress}
       style={{
-        paddingHorizontal: 16,
-        paddingVertical: 8,
+        height: 32,
+        paddingHorizontal: 14,
+        justifyContent: "center",
         borderRadius: 999,
         borderWidth: 1,
-        borderColor: active ? "#3A2E22" : "#D9CBB1",
-        backgroundColor: active ? "#3A2E22" : "transparent",
+        borderColor: active ? tokens.ink : tokens.hairline,
+        backgroundColor: active ? tokens.ink : "transparent",
       }}
     >
       <Text
         style={{
-          fontFamily: "Inter_500Medium",
-          fontSize: 13,
-          color: active ? "#F4ECDF" : "#5A4A38",
+          fontFamily: "InterTight_500Medium",
+          fontSize: 12,
+          color: active ? tokens.cream : tokens.ink2,
           letterSpacing: 0.3,
         }}
       >
@@ -270,7 +300,7 @@ function Chip({
 }
 
 const eyebrow = {
-  fontFamily: "Inter_500Medium",
+  fontFamily: "InterTight_500Medium",
   fontSize: 12,
   color: "#8A7A66",
   letterSpacing: 1.6,
@@ -280,7 +310,7 @@ const eyebrow = {
 const heading = {
   marginTop: 6,
   fontSize: 30,
-  color: "#3A2E22",
+  color: "#2A211A",
   letterSpacing: -0.3,
   lineHeight: 36,
 } as const;

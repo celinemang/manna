@@ -8,6 +8,7 @@ import { Wordmark } from "./Wordmark";
 import { setOnboarded } from "../lib/onboarding";
 import { useLocale } from "../lib/useLocale";
 import { serifMedium } from "../lib/typography";
+import { PaperGrain } from "./PaperGrain";
 
 type Props = {
   step: 0 | 1 | 2;
@@ -46,12 +47,13 @@ export function OnboardingStep({ step, nextHref }: Props) {
     <View
       style={{
         flex: 1,
-        backgroundColor: "#F4ECDF",
+        backgroundColor: "#F5EBD7",
         paddingTop: insets.top + 24,
         paddingBottom: insets.bottom + 32,
         paddingHorizontal: 32,
       }}
     >
+      <PaperGrain />
       {/* Top: wordmark + skip */}
       <View
         style={{
@@ -63,7 +65,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         <Wordmark size={20} />
         {!isLast && (
           <Pressable onPress={onSkip} hitSlop={12}>
-            <Text style={{ fontFamily: "Inter_500Medium", fontSize: 13, color: "#8A7A66" }}>
+            <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 13, color: "#8A7A66" }}>
               {t("onboarding.skip")}
             </Text>
           </Pressable>
@@ -77,7 +79,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
             width: 96,
             height: 96,
             borderRadius: 48,
-            backgroundColor: "#EDE2CF",
+            backgroundColor: "#ECE0C5",
             borderWidth: 1,
             borderColor: "#D9CBB1",
             alignItems: "center",
@@ -88,7 +90,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         </View>
         <Text
           style={{
-            fontFamily: "Inter_600SemiBold",
+            fontFamily: "InterTight_600SemiBold",
             fontSize: 11,
             color: "#8A7A66",
             letterSpacing: 2.2,
@@ -102,7 +104,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
             fontFamily: serifMedium(locale),
             fontSize: 40,
             lineHeight: 46,
-            color: "#3A2E22",
+            color: "#2A211A",
             letterSpacing: -0.3,
           }}
         >
@@ -110,7 +112,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         </Text>
         <Text
           style={{
-            fontFamily: "Inter_400Regular",
+            fontFamily: "InterTight_400Regular",
             fontSize: 16,
             lineHeight: 26,
             color: "#5A4A38",
@@ -137,7 +139,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
                 width: i === step ? 22 : 6,
                 height: 6,
                 borderRadius: 3,
-                backgroundColor: i === step ? "#3A2E22" : "#D9CBB1",
+                backgroundColor: i === step ? "#2A211A" : "#D9CBB1",
               }}
             />
           ))}
@@ -145,7 +147,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         <Pressable
           onPress={onContinue}
           style={({ pressed }) => ({
-            backgroundColor: "#3A2E22",
+            backgroundColor: "#2A211A",
             paddingHorizontal: 22,
             height: 52,
             borderRadius: 999,
@@ -157,7 +159,7 @@ export function OnboardingStep({ step, nextHref }: Props) {
         >
           <Text
             style={{
-              fontFamily: "Inter_500Medium",
+              fontFamily: "InterTight_500Medium",
               fontSize: 15,
               color: "#FAF4E8",
             }}

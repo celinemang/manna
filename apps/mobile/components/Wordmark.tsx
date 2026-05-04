@@ -30,7 +30,7 @@ function WheatGlyph({ size, color }: { size: number; color: string }) {
   );
 }
 
-export function Wordmark({ size = 28, color = "#3A2E22", showMark = true }: Props) {
+export function Wordmark({ size = 28, color = "#2A211A", showMark = true }: Props) {
   const { t } = useTranslation();
   return (
     <View style={{ flexDirection: "row", alignItems: "center", gap: size * 0.32 }}>

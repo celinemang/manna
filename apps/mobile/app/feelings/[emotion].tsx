@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { ActivityIndicator, Pressable, ScrollView, Text, View } from "react-native";
+import type { TFunction } from "i18next";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -8,9 +9,11 @@ import { getEmotion } from "@manna/shared/data/emotions";
 import { versesByEmotion } from "@manna/shared/data/verses";
 import type { Devotion, EmotionId, Verse } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
+import { PaperGrain } from "../../components/PaperGrain";
 import { fetchDevotion } from "../../lib/devotion";
 import { useLocale } from "../../lib/useLocale";
 import { serifItalic, serifMedium } from "../../lib/typography";
+import { tokens } from "../../lib/tokens";
 import { recordMood } from "../../lib/journey";
 import {
   removeByVerseId,
@@ -88,7 +91,7 @@ export default function EmotionResult() {
 
   if (!meta || !verse) {
     return (
-      <SafeAreaView style={{ flex: 1, backgroundColor: "#FAF4E8" }}>
+      <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
         <Text style={{ padding: 24 }}>Not found</Text>
       </SafeAreaView>
     );
@@ -100,7 +103,8 @@ export default function EmotionResult() {
   const translation = verse.translation[locale] ?? verse.translation.en;
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FAF4E8" }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
+      <PaperGrain />
       {/* Top bar */}
       <View
         style={{
@@ -119,7 +123,7 @@ export default function EmotionResult() {
           <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
             <Path
               d="M15 6l-6 6 6 6"
-              stroke="#3A2E22"
+              stroke="#2A211A"
               strokeWidth={1.6}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -130,7 +134,7 @@ export default function EmotionResult() {
           style={{
             flex: 1,
             textAlign: "center",
-            fontFamily: "Inter_500Medium",
+            fontFamily: "InterTight_500Medium",
             fontSize: 13,
             color: "#5A4A38",
             letterSpacing: 1.6,
@@ -156,18 +160,18 @@ export default function EmotionResult() {
             paddingRight: 14,
             paddingVertical: 6,
             borderRadius: 999,
-            backgroundColor: "#EDE2CF",
+            backgroundColor: "#ECE0C5",
             borderWidth: 1,
             borderColor: "#D9CBB1",
             marginTop: 8,
           }}
         >
-          <Glyph kind={meta.glyph} size={16} color="#3A2E22" strokeWidth={1.5} />
+          <Glyph kind={meta.glyph} size={16} color="#2A211A" strokeWidth={1.5} />
           <Text
             style={{
-              fontFamily: "Inter_500Medium",
+              fontFamily: "InterTight_500Medium",
               fontSize: 12,
-              color: "#3A2E22",
+              color: "#2A211A",
               letterSpacing: 0.4,
             }}
           >
@@ -181,10 +185,10 @@ export default function EmotionResult() {
             marginTop: 22,
             padding: 26,
             paddingTop: 28,
-            borderRadius: 22,
-            backgroundColor: meta.bg,
+            borderRadius: 18,
+            backgroundColor: tokens.card,
             borderWidth: 1,
-            borderColor: "#D9CBB1",
+            borderColor: tokens.hairline,
           }}
         >
           <Text
@@ -223,7 +227,7 @@ export default function EmotionResult() {
             <View style={{ width: 36, height: 1, backgroundColor: meta.ink, opacity: 0.5 }} />
             <Text
               style={{
-                fontFamily: "Inter_600SemiBold",
+                fontFamily: "InterTight_600SemiBold",
                 fontSize: 11.5,
                 color: meta.ink,
                 opacity: 0.85,
@@ -236,108 +240,95 @@ export default function EmotionResult() {
           </View>
         </View>
 
-        {/* Reflection / Prayer / Action */}
-        {status === "loading" && (
-          <View style={{ marginTop: 30, alignItems: "center", gap: 12 }}>
-            <ActivityIndicator color="#8A7A66" />
-            <Text style={{ fontFamily: "Inter_400Regular", fontSize: 13, color: "#8A7A66" }}>
-              {t("result.loadingDevotion")}
+        {/* Reflection / Prayer / Action — labels render even while loading */}
+        <Section label={t("result.reflectionLabel")}>
+          {status === "ready" && devotion ? (
+            <Text
+              style={{
+                marginTop: 12,
+                fontFamily: serifMedium(locale),
+                fontSize: 17,
+                lineHeight: 27,
+                color: tokens.ink,
+              }}
+            >
+              {devotion.reflection}
             </Text>
-          </View>
-        )}
+          ) : (
+            <Skeleton lines={4} status={status} t={t} locale={locale} />
+          )}
+        </Section>
 
-        {status === "error" && (
-          <Text
-            style={{
-              marginTop: 30,
-              fontFamily: serifItalic(locale),
-              fontSize: 16,
-              color: "#8A7A66",
-              lineHeight: 24,
-            }}
-          >
-            {t("result.devotionError")}
-          </Text>
-        )}
-
-        {status === "ready" && devotion && (
-          <>
-            <Section label={t("result.reflectionLabel")}>
+        <Section label={t("result.prayerLabel")}>
+          {status === "ready" && devotion ? (
+            <View
+              style={{
+                marginTop: 12,
+                paddingVertical: 16,
+                paddingHorizontal: 22,
+                borderLeftWidth: 2,
+                borderLeftColor: tokens.gold,
+              }}
+            >
               <Text
                 style={{
-                  marginTop: 12,
-                  fontFamily: serifMedium(locale),
-                  fontSize: 17,
+                  fontFamily: serifItalic(locale),
+                  fontSize: 16.5,
                   lineHeight: 27,
-                  color: "#3A2E22",
+                  color: tokens.ink2,
                 }}
               >
-                {devotion.reflection}
+                {devotion.prayer}
               </Text>
-            </Section>
-            <Section label={t("result.prayerLabel")}>
+            </View>
+          ) : (
+            <Skeleton lines={3} status={status} t={t} locale={locale} indent />
+          )}
+        </Section>
+
+        <Section label={t("result.actionLabel")}>
+          {status === "ready" && devotion ? (
+            <View
+              style={{
+                marginTop: 12,
+                paddingVertical: 16,
+                paddingHorizontal: 20,
+                borderRadius: 14,
+                borderWidth: 1,
+                borderStyle: "dashed",
+                borderColor: tokens.ink3,
+                backgroundColor: "rgba(232,219,196,0.35)",
+                flexDirection: "row",
+                gap: 12,
+                alignItems: "flex-start",
+              }}
+            >
               <View
                 style={{
-                  marginTop: 12,
-                  paddingVertical: 16,
-                  paddingHorizontal: 22,
-                  borderLeftWidth: 2,
-                  borderLeftColor: "#B89556",
+                  width: 22,
+                  height: 22,
+                  borderRadius: 6,
+                  borderWidth: 1.4,
+                  borderColor: tokens.ink,
+                  marginTop: 2,
                 }}
-              >
-                <Text
-                  style={{
-                    fontFamily: serifItalic(locale),
-                    fontSize: 16.5,
-                    lineHeight: 27,
-                    color: "#5A4A38",
-                  }}
-                >
-                  {devotion.prayer}
-                </Text>
-              </View>
-            </Section>
-            <Section label={t("result.actionLabel")}>
-              <View
+              />
+              <Text
                 style={{
-                  marginTop: 12,
-                  paddingVertical: 16,
-                  paddingHorizontal: 20,
-                  borderRadius: 14,
-                  borderWidth: 1,
-                  borderStyle: "dashed",
-                  borderColor: "#8A7A66",
-                  backgroundColor: "rgba(232,219,196,0.35)",
-                  flexDirection: "row",
-                  gap: 12,
-                  alignItems: "flex-start",
+                  flex: 1,
+                  fontFamily: "InterTight_500Medium",
+                  fontSize: 15,
+                  lineHeight: 23,
+                  color: tokens.ink,
                 }}
               >
-                <View
-                  style={{
-                    width: 22,
-                    height: 22,
-                    borderRadius: 6,
-                    borderWidth: 1.4,
-                    borderColor: "#3A2E22",
-                    marginTop: 2,
-                  }}
-                />
-                <Text
-                  style={{
-                    flex: 1,
-                    fontFamily: "Inter_500Medium",
-                    fontSize: 15,
-                    lineHeight: 23,
-                    color: "#3A2E22",
-                  }}
-                >
-                  {devotion.actionStep}
-                </Text>
-              </View>
-            </Section>
-          </>
-        )}
+                {devotion.actionStep}
+              </Text>
+            </View>
+          ) : (
+            <Skeleton lines={1} status={status} t={t} locale={locale} />
+          )}
+        </Section>
       </ScrollView>
 
       {/* Bottom action bar */}
@@ -371,7 +362,7 @@ export default function EmotionResult() {
             opacity: pressed ? 0.85 : 1,
           })}
         >
-          <Text style={{ fontFamily: "Inter_500Medium", fontSize: 14, color: "#3A2E22" }}>
+          <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 14, color: "#2A211A" }}>
             {t("result.anotherVerse")}
           </Text>
         </Pressable>
@@ -386,14 +377,14 @@ export default function EmotionResult() {
             borderColor: "#D9CBB1",
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: saved ? "#3A2E22" : "#FAF4E8",
+            backgroundColor: saved ? "#2A211A" : "#FAF4E8",
             opacity: pressed ? 0.85 : 1,
           })}
         >
           <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
             <Path
               d="M6 4h12v17l-6-4-6 4z"
-              stroke={saved ? "#FAF4E8" : "#3A2E22"}
+              stroke={saved ? "#FAF4E8" : "#2A211A"}
               strokeWidth={1.6}
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -407,13 +398,13 @@ export default function EmotionResult() {
             flex: 1.2,
             height: 52,
             borderRadius: 999,
-            backgroundColor: "#3A2E22",
+            backgroundColor: "#2A211A",
             alignItems: "center",
             justifyContent: "center",
             opacity: pressed ? 0.85 : 1,
           })}
         >
-          <Text style={{ fontFamily: "Inter_500Medium", fontSize: 14, color: "#FAF4E8" }}>
+          <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 14, color: "#FAF4E8" }}>
             {t("result.share")}
           </Text>
         </Pressable>
@@ -422,12 +413,71 @@ export default function EmotionResult() {
   );
 }
 
+function Skeleton({
+  lines,
+  status,
+  t,
+  locale,
+  indent,
+}: {
+  lines: number;
+  status: "loading" | "ready" | "error";
+  t: TFunction;
+  locale: "en" | "ko";
+  indent?: boolean;
+}) {
+  return (
+    <View
+      style={{
+        marginTop: 12,
+        gap: 8,
+        paddingLeft: indent ? 22 : 0,
+      }}
+    >
+      {status === "error" ? (
+        <Text
+          style={{
+            fontFamily: serifItalic(locale),
+            fontSize: 14,
+            color: tokens.ink3,
+            lineHeight: 22,
+          }}
+        >
+          {t("result.devotionError")}
+        </Text>
+      ) : (
+        <>
+          {Array.from({ length: lines }).map((_, i) => (
+            <View
+              key={i}
+              style={{
+                height: 12,
+                borderRadius: 6,
+                backgroundColor: "rgba(58,46,34,0.08)",
+                width: i === lines - 1 ? "55%" : "100%",
+              }}
+            />
+          ))}
+          {status === "loading" && (
+            <View style={{ flexDirection: "row", alignItems: "center", gap: 8, marginTop: 6 }}>
+              <ActivityIndicator size="small" color={tokens.ink3} />
+              <Text style={{ fontFamily: "InterTight_400Regular", fontSize: 12, color: tokens.ink3 }}>
+                {t("result.loadingDevotion")}
+              </Text>
+            </View>
+          )}
+        </>
+      )}
+    </View>
+  );
+}
+
 function Section({ label, children }: { label: string; children: React.ReactNode }) {
   return (
     <View style={{ marginTop: 28 }}>
       <Text
         style={{
-          fontFamily: "Inter_600SemiBold",
+          fontFamily: "InterTight_600SemiBold",
           fontSize: 11,
           color: "#8A7A66",
           letterSpacing: 2.2,

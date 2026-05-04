@@ -84,7 +84,7 @@ export function VerseCard({
           <Glyph kind={emotion.glyph} size={12} color={emotion.ink} strokeWidth={1.6} />
           <Text
             style={{
-              fontFamily: "Inter_600SemiBold",
+              fontFamily: "InterTight_600SemiBold",
               fontSize: 10.5,
               color: emotion.ink,
               letterSpacing: 1.4,
@@ -96,7 +96,7 @@ export function VerseCard({
         </View>
         <Text
           style={{
-            fontFamily: "Inter_500Medium",
+            fontFamily: "InterTight_500Medium",
             fontSize: 11,
             color: emotion.ink,
             opacity: 0.55,
@@ -139,7 +139,7 @@ export function VerseCard({
         <View style={{ width: 36, height: 1, backgroundColor: emotion.ink, opacity: 0.5 }} />
         <Text
           style={{
-            fontFamily: "Inter_600SemiBold",
+            fontFamily: "InterTight_600SemiBold",
             fontSize: 11.5,
             color: emotion.ink,
             opacity: 0.85,
@@ -238,7 +238,7 @@ function ActionPill({
       {icon}
       <Text
         style={{
-          fontFamily: "Inter_600SemiBold",
+          fontFamily: "InterTight_600SemiBold",
           fontSize: 12,
           letterSpacing: 0.6,
           color: filled ? "#FAF4E8" : ink,

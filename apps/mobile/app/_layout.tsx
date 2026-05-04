@@ -16,6 +16,11 @@ import {
   Inter_600SemiBold,
 } from "@expo-google-fonts/inter";
 import {
+  InterTight_400Regular,
+  InterTight_500Medium,
+  InterTight_600SemiBold,
+} from "@expo-google-fonts/inter-tight";
+import {
   NotoSerifKR_400Regular,
   NotoSerifKR_500Medium,
 } from "@expo-google-fonts/noto-serif-kr";
@@ -38,6 +43,9 @@ export default function RootLayout() {
     Inter_400Regular,
     Inter_500Medium,
     Inter_600SemiBold,
+    InterTight_400Regular,
+    InterTight_500Medium,
+    InterTight_600SemiBold,
     NotoSerifKR_400Regular,
     NotoSerifKR_500Medium,
     NotoSansKR_400Regular,
@@ -60,7 +68,7 @@ export default function RootLayout() {
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
-        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#F4ECDF" } }}>
+        <Stack screenOptions={{ headerShown: false, contentStyle: { backgroundColor: "#F5EBD7" } }}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="(tabs)" />

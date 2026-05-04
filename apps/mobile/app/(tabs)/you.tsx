@@ -13,11 +13,12 @@ import {
   scheduleDailyReminder,
 } from "../../lib/notifications";
 import { useLocale } from "../../lib/useLocale";
+import { PaperGrain } from "../../components/PaperGrain";
 
-const CREAM = "#F4ECDF";
-const INK = "#3A2E22";
+const CREAM = "#F5EBD7";
+const INK = "#2A211A";
 const SUB = "#8A7A66";
-const HAIRLINE = "#D9CBB1";
+const HAIRLINE = "#D6C7A8";
 
 export default function You() {
   const { t } = useTranslation();
@@ -85,6 +86,7 @@ export default function You() {
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: CREAM }}>
+      <PaperGrain />
       <ScrollView contentContainerStyle={{ paddingBottom: 60 }}>
         {/* Heading */}
         <View style={{ paddingHorizontal: 28, paddingTop: 4, paddingBottom: 16 }}>
@@ -205,7 +207,7 @@ export default function You() {
                     >
                       <Text
                         style={{
-                          fontFamily: "Inter_600SemiBold",
+                          fontFamily: "InterTight_600SemiBold",
                           fontSize: 11,
                           color: e.ink,
                           letterSpacing: 0.4,
@@ -245,7 +247,7 @@ export default function You() {
                   borderColor: HAIRLINE,
                 }}
               >
-                <Text style={{ fontFamily: "Inter_500Medium", fontSize: 13, color: INK }}>
+                <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 13, color: INK }}>
                   {fmtHour(hour)}
                 </Text>
               </Pressable>
@@ -279,7 +281,7 @@ export default function You() {
                     >
                       <Text
                         style={{
-                          fontFamily: "Inter_500Medium",
+                          fontFamily: "InterTight_500Medium",
                           fontSize: 12,
                           color: active ? CREAM : SUB,
                           letterSpacing: 0.4,
@@ -316,7 +318,7 @@ export default function You() {
           style={{
             marginTop: 24,
             paddingHorizontal: 28,
-            fontFamily: "Inter_400Regular",
+            fontFamily: "InterTight_400Regular",
             fontSize: 11,
             lineHeight: 17,
             color: SUB,
@@ -354,7 +356,7 @@ function StreakCard({
     >
       <Text
         style={{
-          fontFamily: "Inter_500Medium",
+          fontFamily: "InterTight_500Medium",
           fontSize: 10.5,
           letterSpacing: 1.6,
           textTransform: "uppercase",
@@ -376,7 +378,7 @@ function StreakCard({
       </Text>
       <Text
         style={{
-          fontFamily: "Inter_500Medium",
+          fontFamily: "InterTight_500Medium",
           fontSize: 11,
           color: dark ? "rgba(244,236,223,0.6)" : SUB,
           letterSpacing: 0.4,
@@ -443,9 +445,9 @@ function Row({
       }}
     >
       <View style={{ flex: 1, gap: 2 }}>
-        <Text style={{ fontFamily: "Inter_500Medium", fontSize: 14, color: INK }}>{label}</Text>
+        <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 14, color: INK }}>{label}</Text>
         {hint ? (
-          <Text style={{ fontFamily: "Inter_400Regular", fontSize: 11.5, color: SUB, lineHeight: 16 }}>
+          <Text style={{ fontFamily: "InterTight_400Regular", fontSize: 11.5, color: SUB, lineHeight: 16 }}>
             {hint}
           </Text>
         ) : null}
@@ -464,12 +466,12 @@ function Row({
 
 function Chevron() {
   return (
-    <Text style={{ fontFamily: "Inter_500Medium", fontSize: 18, color: SUB }}>›</Text>
+    <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 18, color: SUB }}>›</Text>
   );
 }
 
 const eyebrow = {
-  fontFamily: "Inter_500Medium",
+  fontFamily: "InterTight_500Medium",
   fontSize: 12,
   color: SUB,
   letterSpacing: 1.6,
@@ -486,7 +488,7 @@ const heading = {
 } as const;
 
 const sectionLabel = {
-  fontFamily: "Inter_600SemiBold",
+  fontFamily: "InterTight_600SemiBold",
   fontSize: 11,
   color: SUB,
   letterSpacing: 2.2,
@@ -494,13 +496,13 @@ const sectionLabel = {
 } as const;
 
 const rowValue = {
-  fontFamily: "Inter_500Medium",
+  fontFamily: "InterTight_500Medium",
   fontSize: 13,
   color: SUB,
 } as const;
 
 const smallSub = {
-  fontFamily: "Inter_500Medium",
+  fontFamily: "InterTight_500Medium",
   fontSize: 10,
   color: SUB,
   letterSpacing: 0.6,

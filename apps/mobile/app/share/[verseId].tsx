@@ -20,8 +20,8 @@ type Style = {
 };
 
 const STYLES: Style[] = [
-  { id: "cream", label: "Cream", bg: "#F4ECDF", ink: "#3A2E22", rule: "rgba(58,46,34,0.5)" },
-  { id: "night", label: "Night", bg: "#1F1812", ink: "#F4ECDF", rule: "rgba(244,236,223,0.5)" },
+  { id: "cream", label: "Cream", bg: "#F5EBD7", ink: "#2A211A", rule: "rgba(58,46,34,0.5)" },
+  { id: "night", label: "Night", bg: "#1F1812", ink: "#F5EBD7", rule: "rgba(244,236,223,0.5)" },
   { id: "sage", label: "Sage", bg: "#D9DFC8", ink: "#3A4030", rule: "rgba(58,64,48,0.5)" },
   { id: "rose", label: "Rose", bg: "#F2DAD2", ink: "#5C3A30", rule: "rgba(92,58,48,0.5)" },
   { id: "dusk", label: "Dusk", bg: "#C9C2D6", ink: "#322B4A", rule: "rgba(50,43,74,0.5)" },
@@ -105,9 +105,9 @@ export default function ShareModal() {
       >
         <Text
           style={{
-            fontFamily: "Inter_500Medium",
+            fontFamily: "InterTight_500Medium",
             fontSize: 13,
-            color: "#F4ECDF",
+            color: "#F5EBD7",
             letterSpacing: 1.6,
             textTransform: "uppercase",
           }}
@@ -115,7 +115,7 @@ export default function ShareModal() {
           {t("share.heading")}
         </Text>
         <Pressable onPress={() => router.back()} hitSlop={12}>
-          <Text style={{ color: "#F4ECDF", fontSize: 15 }}>{t("share.close")}</Text>
+          <Text style={{ color: "#F5EBD7", fontSize: 15 }}>{t("share.close")}</Text>
         </Pressable>
       </View>
 
@@ -135,7 +135,7 @@ export default function ShareModal() {
           <View style={{ flex: 1, padding: 32, justifyContent: "space-between" }}>
             <Text
               style={{
-                fontFamily: "Inter_600SemiBold",
+                fontFamily: "InterTight_600SemiBold",
                 fontSize: 10,
                 letterSpacing: 2,
                 textTransform: "uppercase",
@@ -174,7 +174,7 @@ export default function ShareModal() {
               <View style={{ width: 28, height: 1, backgroundColor: style.rule }} />
               <Text
                 style={{
-                  fontFamily: "Inter_600SemiBold",
+                  fontFamily: "InterTight_600SemiBold",
                   fontSize: 10.5,
                   letterSpacing: 1.6,
                   textTransform: "uppercase",
@@ -198,7 +198,7 @@ export default function ShareModal() {
         >
           <Text
             style={{
-              fontFamily: "Inter_600SemiBold",
+              fontFamily: "InterTight_600SemiBold",
               fontSize: 10.5,
               color: "rgba(244,236,223,0.5)",
               letterSpacing: 2,
@@ -219,7 +219,7 @@ export default function ShareModal() {
                   borderRadius: 22,
                   backgroundColor: s.bg,
                   borderWidth: 2,
-                  borderColor: s.id === styleId ? "#F4ECDF" : "transparent",
+                  borderColor: s.id === styleId ? "#F5EBD7" : "transparent",
                 }}
               />
             ))}
@@ -253,7 +253,7 @@ export default function ShareModal() {
             opacity: pressed || working ? 0.7 : 1,
           })}
         >
-          <Text style={{ fontFamily: "Inter_500Medium", fontSize: 14, color: "#F4ECDF" }}>
+          <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 14, color: "#F5EBD7" }}>
             {t("share.save")}
           </Text>
         </Pressable>
@@ -264,13 +264,13 @@ export default function ShareModal() {
             flex: 1.2,
             height: 52,
             borderRadius: 999,
-            backgroundColor: "#F4ECDF",
+            backgroundColor: "#F5EBD7",
             alignItems: "center",
             justifyContent: "center",
             opacity: pressed || working ? 0.85 : 1,
           })}
         >
-          <Text style={{ fontFamily: "Inter_500Medium", fontSize: 14, color: "#1F1812" }}>
+          <Text style={{ fontFamily: "InterTight_500Medium", fontSize: 14, color: "#1F1812" }}>
             {t("share.shareBtn")}
           </Text>
         </Pressable>
