@@ -36,6 +36,45 @@ type Dict = {
     remove: string;
     open: string;
   };
+  journey: {
+    eyebrow: string;
+    heading: string;
+    streakCurrent: string;
+    streakBest: string;
+    streakDays: string;
+    last14: string;
+    breakdown: string;
+    empty: string;
+  };
+  settings: {
+    eyebrow: string;
+    heading: string;
+    rhythm: string;
+    dailyReminder: string;
+    dailyReminderHint: string;
+    reminderTime: string;
+    enable: string;
+    disable: string;
+    reading: string;
+    translation: string;
+    translationValue: string;
+    privacy: string;
+    appLock: string;
+    aiGen: string;
+    about: string;
+    feedback: string;
+    version: string;
+    notifTitle: string;
+    notifBody: string;
+  };
+  share: {
+    heading: string;
+    style: string;
+    save: string;
+    shareBtn: string;
+    saved: string;
+    close: string;
+  };
   onboarding: {
     skip: string;
     continue: string;
@@ -95,6 +134,45 @@ const en: Dict = {
     empty: "Nothing saved yet. Tap Save on any verse to keep it here.",
     remove: "Remove",
     open: "Open",
+  },
+  journey: {
+    eyebrow: "Journey",
+    heading: "Your walk",
+    streakCurrent: "Current streak",
+    streakBest: "Best streak",
+    streakDays: "days",
+    last14: "Last 14 days",
+    breakdown: "Mood breakdown",
+    empty: "No moods logged yet. Pick a feeling to start your journey.",
+  },
+  settings: {
+    eyebrow: "Settings",
+    heading: "You",
+    rhythm: "Daily rhythm",
+    dailyReminder: "Daily reminder",
+    dailyReminderHint: "A gentle nudge to open Manna at the same time each day.",
+    reminderTime: "Reminder time",
+    enable: "On",
+    disable: "Off",
+    reading: "Reading",
+    translation: "Translation",
+    translationValue: "WEB · World English Bible",
+    privacy: "Privacy",
+    appLock: "App lock",
+    aiGen: "AI-generated reflections",
+    about: "About",
+    feedback: "Send feedback",
+    version: "Version",
+    notifTitle: "A verse for today",
+    notifBody: "Open Manna for a quiet word.",
+  },
+  share: {
+    heading: "Share",
+    style: "Style",
+    save: "Save image",
+    shareBtn: "Share",
+    saved: "Saved to Photos",
+    close: "Close",
   },
   onboarding: {
     skip: "Skip",
@@ -171,6 +249,45 @@ const ko: Dict = {
     empty: "아직 저장된 말씀이 없어요. 마음에 닿는 구절을 저장해 보세요.",
     remove: "삭제",
     open: "열기",
+  },
+  journey: {
+    eyebrow: "여정",
+    heading: "당신의 걸음",
+    streakCurrent: "지금의 연속",
+    streakBest: "가장 긴 연속",
+    streakDays: "일",
+    last14: "최근 14일",
+    breakdown: "감정 분포",
+    empty: "아직 기록된 마음이 없어요. 감정을 골라 여정을 시작해 보세요.",
+  },
+  settings: {
+    eyebrow: "설정",
+    heading: "당신",
+    rhythm: "하루의 리듬",
+    dailyReminder: "매일 알림",
+    dailyReminderHint: "매일 같은 시간에 만나를 열어 보세요.",
+    reminderTime: "알림 시간",
+    enable: "켜짐",
+    disable: "꺼짐",
+    reading: "읽기",
+    translation: "번역",
+    translationValue: "WEB · World English Bible",
+    privacy: "개인정보",
+    appLock: "앱 잠금",
+    aiGen: "AI 묵상 생성",
+    about: "정보",
+    feedback: "의견 보내기",
+    version: "버전",
+    notifTitle: "오늘의 말씀",
+    notifBody: "잠시 만나를 열어보세요.",
+  },
+  share: {
+    heading: "공유",
+    style: "스타일",
+    save: "이미지 저장",
+    shareBtn: "공유",
+    saved: "사진에 저장됨",
+    close: "닫기",
   },
   onboarding: {
     skip: "건너뛰기",

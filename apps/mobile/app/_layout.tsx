@@ -21,6 +21,7 @@ import {
 } from "@expo-google-fonts/noto-serif-kr";
 import "../lib/i18n";
 import "../global.css";
+import { touchStreak } from "../lib/journey";
 
 void SplashScreen.preventAutoHideAsync();
 
@@ -42,6 +43,10 @@ export default function RootLayout() {
     }
   }, [loaded, error]);
 
+  useEffect(() => {
+    void touchStreak();
+  }, []);
+
   if (!loaded && !error) return null;
 
   return (
@@ -51,6 +56,10 @@ export default function RootLayout() {
           <Stack.Screen name="index" />
           <Stack.Screen name="(onboarding)" />
           <Stack.Screen name="(tabs)" />
+          <Stack.Screen
+            name="share/[verseId]"
+            options={{ presentation: "modal", animation: "slide_from_bottom" }}
+          />
         </Stack>
         <StatusBar style="dark" />
       </SafeAreaProvider>

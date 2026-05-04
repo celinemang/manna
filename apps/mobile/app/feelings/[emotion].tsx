@@ -10,6 +10,12 @@ import type { Devotion, EmotionId, Verse } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
 import { fetchDevotion } from "../../lib/devotion";
 import { useLocale } from "../../lib/useLocale";
+import { recordMood } from "../../lib/journey";
+import {
+  removeByVerseId,
+  saveItem,
+  useIsVerseSaved,
+} from "../../lib/saved";
 
 function pickIndex(length: number, exclude: number) {
   if (length <= 1) return 0;
@@ -39,6 +45,7 @@ export default function EmotionResult() {
     const ctrl = new AbortController();
     setStatus("loading");
     setDevotion(null);
+    void recordMood(emotionId);
     fetchDevotion({
       verseId: verse.id,
       emotion: emotionId,
@@ -55,6 +62,28 @@ export default function EmotionResult() {
       });
     return () => ctrl.abort();
   }, [verse?.id, emotionId, locale]);
+
+  const saved = useIsVerseSaved(verse?.id ?? "");
+  const onToggleSave = () => {
+    if (!verse) return;
+    if (saved) {
+      void removeByVerseId(verse.id);
+    } else {
+      void saveItem({
+        verseId: verse.id,
+        emotion: emotionId,
+        locale,
+        devotion: devotion ?? undefined,
+      });
+    }
+  };
+  const onShare = () => {
+    if (!verse) return;
+    router.push({
+      pathname: "/share/[verseId]",
+      params: { verseId: verse.id, emotion: emotionId },
+    });
+  };
 
   if (!meta || !verse) {
     return (
@@ -336,6 +365,33 @@ export default function EmotionResult() {
           </Text>
         </Pressable>
         <Pressable
+          onPress={onToggleSave}
+          accessibilityLabel={saved ? t("feed.unsave") : t("feed.save")}
+          style={({ pressed }) => ({
+            width: 52,
+            height: 52,
+            borderRadius: 999,
+            borderWidth: 1,
+            borderColor: "#D9CBB1",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: saved ? "#3A2E22" : "#FAF4E8",
+            opacity: pressed ? 0.85 : 1,
+          })}
+        >
+          <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
+            <Path
+              d="M6 4h12v17l-6-4-6 4z"
+              stroke={saved ? "#FAF4E8" : "#3A2E22"}
+              strokeWidth={1.6}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              fill={saved ? "#FAF4E8" : "none"}
+            />
+          </Svg>
+        </Pressable>
+        <Pressable
+          onPress={onShare}
           style={({ pressed }) => ({
             flex: 1.2,
             height: 52,
