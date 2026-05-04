@@ -2,7 +2,8 @@ import { Pressable, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
-import Svg, { Circle, Path } from "react-native-svg";
+import Svg, { Path } from "react-native-svg";
+import { Glyph } from "./Glyph";
 import { Wordmark } from "./Wordmark";
 import { setOnboarded } from "../lib/onboarding";
 
@@ -12,55 +13,6 @@ type Props = {
 };
 
 const GLYPHS = ["wheat", "spark", "sun"] as const;
-
-function Glyph({ kind, size = 48, color = "#3A2E22" }: { kind: (typeof GLYPHS)[number]; size?: number; color?: string }) {
-  const s = { stroke: color, strokeWidth: 1.3, fill: "none" as const };
-  if (kind === "wheat") {
-    return (
-      <Svg width={size} height={size} viewBox="0 0 64 64">
-        <Path d="M32 56 V18" {...s} />
-        {[0, 1, 2, 3, 4].map((i) => {
-          const y = 50 - i * 7;
-          return (
-            <Path
-              key={i}
-              d={`M32 ${y} Q22 ${y - 4}, 18 ${y - 10} M32 ${y} Q42 ${y - 4}, 46 ${y - 10}`}
-              {...s}
-            />
-          );
-        })}
-        <Circle cx={32} cy={14} r={2} fill={color} />
-      </Svg>
-    );
-  }
-  if (kind === "spark") {
-    return (
-      <Svg width={size} height={size} viewBox="0 0 24 24">
-        <Path
-          d="M12 3 L13.5 10.5 L21 12 L13.5 13.5 L12 21 L10.5 13.5 L3 12 L10.5 10.5 Z"
-          fill={color}
-        />
-      </Svg>
-    );
-  }
-  // sun
-  return (
-    <Svg width={size} height={size} viewBox="0 0 64 64">
-      <Circle cx={32} cy={36} r={10} {...s} />
-      <Path d="M8 50 H56" {...s} />
-      {[0, 1, 2, 3, 4].map((i) => {
-        const a = -90 + (i - 2) * 22;
-        const r1 = 16,
-          r2 = 22;
-        const x1 = 32 + Math.cos((a * Math.PI) / 180) * r1;
-        const y1 = 36 + Math.sin((a * Math.PI) / 180) * r1;
-        const x2 = 32 + Math.cos((a * Math.PI) / 180) * r2;
-        const y2 = 36 + Math.sin((a * Math.PI) / 180) * r2;
-        return <Path key={i} d={`M${x1} ${y1} L${x2} ${y2}`} {...s} />;
-      })}
-    </Svg>
-  );
-}
 
 export function OnboardingStep({ step, nextHref }: Props) {
   const { t } = useTranslation();
