@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { VerseCard } from "@/components/VerseCard";
+import { shareVerseCard } from "@/lib/share";
 import type { Devotion, EmotionId, Verse } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -60,12 +61,15 @@ export function EmotionResult({ verses, emotion, locale, dict }: Props) {
 
   const share = async () => {
     const text = `“${verse.text[locale]}”\n— ${verse.reference[locale]}`;
-    if (navigator.share) {
-      try {
-        await navigator.share({ title: dict.appName, text });
-      } catch {}
-    } else {
-      await navigator.clipboard.writeText(text);
+    try {
+      await shareVerseCard({
+        verseId: verse.id,
+        locale,
+        fallbackText: text,
+        shareTitle: dict.appName,
+      });
+    } catch {
+      // user cancelled or share failed — silent
     }
   };
 

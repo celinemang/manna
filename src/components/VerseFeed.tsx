@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { VerseCard } from "./VerseCard";
+import { shareVerseCard } from "@/lib/share";
 import type { Verse } from "@/lib/types";
 import type { Locale } from "@/i18n/config";
 import type { Dictionary } from "@/i18n/dictionaries";
@@ -22,15 +23,15 @@ export function VerseFeed({ verses, locale, dict }: Props) {
   };
 
   const share = async () => {
-    const data = { title: dict.appName, text: formatted };
-    if (navigator.share) {
-      try {
-        await navigator.share(data);
-      } catch {
-        // user cancelled
-      }
-    } else {
-      await copy();
+    try {
+      await shareVerseCard({
+        verseId: verse.id,
+        locale,
+        fallbackText: formatted,
+        shareTitle: dict.appName,
+      });
+    } catch {
+      // user cancelled, or share failed — silent
     }
   };
 
