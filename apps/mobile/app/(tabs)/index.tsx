@@ -2,6 +2,7 @@ import { useMemo, useState } from "react";
 import { Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
+import { useRouter } from "expo-router";
 import { verses } from "@manna/shared/data/verses";
 import { getEmotion } from "@manna/shared/data/emotions";
 import type { EmotionId } from "@manna/shared/lib/types";
@@ -15,6 +16,7 @@ export default function Today() {
   const insets = useSafeAreaInsets();
   const { t } = useTranslation();
   const { locale } = useLocale();
+  const router = useRouter();
   const [index, setIndex] = useState(0);
   const { items: savedItems } = useSaved();
 
@@ -65,6 +67,12 @@ export default function Today() {
               if (saved) void removeByVerseId(verse.id);
               else void saveItem({ verseId: verse.id, emotion: verse.emotion, locale });
             };
+            const onShare = () => {
+              router.push({
+                pathname: "/share/[verseId]",
+                params: { verseId: verse.id, emotion: verse.emotion },
+              });
+            };
             return (
               <VerseCard
                 verse={verse}
@@ -73,6 +81,7 @@ export default function Today() {
                 locale={locale}
                 saved={saved}
                 onToggleSave={onToggleSave}
+                onShare={onShare}
               />
             );
           }}

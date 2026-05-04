@@ -28,39 +28,47 @@ const OFFSCREEN = SCREEN_HEIGHT * 0.6;
 export function SwipeStack<T>({ items, renderCard, onIndexChange }: Props<T>) {
   const [index, setIndex] = useState(0);
   const translateY = useSharedValue(0);
+  const translateX = useSharedValue(0);
 
   const advance = (delta: 1 | -1) => {
     const next = (index + delta + items.length) % items.length;
     setIndex(next);
     onIndexChange?.(next);
-    // Reset the active card position to its rest state for the new index.
     translateY.value = 0;
+    translateX.value = 0;
   };
 
+  // Drag in any direction — the card follows the finger on both axes, but the
+  // commit decision is keyed off the vertical component so a diagonal flick
+  // (up-and-right, up-and-left) still advances the stack.
   const gesture = Gesture.Pan()
-    .activeOffsetY([-10, 10])
+    .minDistance(8)
     .onUpdate((e) => {
       translateY.value = e.translationY;
+      translateX.value = e.translationX;
     })
     .onEnd((e) => {
       if (e.translationY < -COMMIT_THRESHOLD) {
-        // Swipe up → next
         translateY.value = withTiming(-OFFSCREEN, { duration: 220 }, () => {
           runOnJS(advance)(1);
         });
+        translateX.value = withTiming(translateX.value * 1.5, { duration: 220 });
       } else if (e.translationY > COMMIT_THRESHOLD) {
-        // Swipe down → previous
         translateY.value = withTiming(OFFSCREEN, { duration: 220 }, () => {
           runOnJS(advance)(-1);
         });
+        translateX.value = withTiming(translateX.value * 1.5, { duration: 220 });
       } else {
-        // Snap back
         translateY.value = withSpring(0, { damping: 18, stiffness: 220 });
+        translateX.value = withSpring(0, { damping: 18, stiffness: 220 });
       }
     });
 
   const activeStyle = useAnimatedStyle(() => ({
-    transform: [{ translateY: translateY.value }],
+    transform: [
+      { translateY: translateY.value },
+      { translateX: translateX.value },
+    ],
   }));
 
   const next = items[(index + 1) % items.length];

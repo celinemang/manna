@@ -1,5 +1,7 @@
 import { Pressable, Text, View } from "react-native";
 import Svg, { Path } from "react-native-svg";
+import * as Haptics from "expo-haptics";
+import { useTranslation } from "react-i18next";
 import type { Verse, EmotionMeta } from "@manna/shared/lib/types";
 import type { Locale } from "@manna/shared/i18n/config";
 import { Glyph } from "./Glyph";
@@ -12,6 +14,7 @@ type Props = {
   locale: Locale;
   saved?: boolean;
   onToggleSave?: () => void;
+  onShare?: () => void;
 };
 
 // Single verse card. Background tinted by emotion. Designer reference:
@@ -24,11 +27,21 @@ export function VerseCard({
   locale,
   saved,
   onToggleSave,
+  onShare,
 }: Props) {
+  const { t } = useTranslation();
   const text = verse.text[locale] ?? verse.text.en;
   const reference = verse.reference[locale] ?? verse.reference.en;
   const translation = verse.translation[locale] ?? verse.translation.en;
   const isLong = text.length > 220;
+  const handleSave = () => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onToggleSave?.();
+  };
+  const handleShare = () => {
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    onShare?.();
+  };
 
   return (
     <View
@@ -81,38 +94,17 @@ export function VerseCard({
             {emotionLabel}
           </Text>
         </View>
-        <View style={{ alignItems: "flex-end", gap: 6 }}>
-          {onToggleSave ? (
-            <Pressable
-              onPress={onToggleSave}
-              hitSlop={12}
-              accessibilityLabel={saved ? "Saved" : "Save"}
-              style={{ width: 28, height: 28, alignItems: "center", justifyContent: "center" }}
-            >
-              <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
-                <Path
-                  d="M6 4h12v17l-6-4-6 4z"
-                  stroke={emotion.ink}
-                  strokeWidth={1.6}
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  fill={saved ? emotion.ink : "none"}
-                />
-              </Svg>
-            </Pressable>
-          ) : null}
-          <Text
-            style={{
-              fontFamily: "Inter_500Medium",
-              fontSize: 11,
-              color: emotion.ink,
-              opacity: 0.55,
-              letterSpacing: 1.4,
-            }}
-          >
-            {translation}
-          </Text>
-        </View>
+        <Text
+          style={{
+            fontFamily: "Inter_500Medium",
+            fontSize: 11,
+            color: emotion.ink,
+            opacity: 0.55,
+            letterSpacing: 1.4,
+          }}
+        >
+          {translation}
+        </Text>
       </View>
 
       {/* Verse */}
@@ -158,6 +150,102 @@ export function VerseCard({
           {reference}
         </Text>
       </View>
+
+      {/* Bottom actions: Save + Share, centered */}
+      {(onToggleSave || onShare) && (
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "center",
+            gap: 10,
+            marginTop: 8,
+          }}
+        >
+          {onToggleSave ? (
+            <ActionPill
+              ink={emotion.ink}
+              filled={!!saved}
+              label={saved ? t("feed.unsave") : t("feed.save")}
+              onPress={handleSave}
+              icon={
+                <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+                  <Path
+                    d="M6 4h12v17l-6-4-6 4z"
+                    stroke={saved ? "#FAF4E8" : emotion.ink}
+                    strokeWidth={1.6}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill={saved ? "#FAF4E8" : "none"}
+                  />
+                </Svg>
+              }
+            />
+          ) : null}
+          {onShare ? (
+            <ActionPill
+              ink={emotion.ink}
+              filled={false}
+              label={t("feed.share")}
+              onPress={handleShare}
+              icon={
+                <Svg width={16} height={16} viewBox="0 0 24 24" fill="none">
+                  <Path
+                    d="M12 3v12m0-12l-4 4m4-4l4 4M5 14v5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-5"
+                    stroke={emotion.ink}
+                    strokeWidth={1.6}
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </Svg>
+              }
+            />
+          ) : null}
+        </View>
+      )}
     </View>
+  );
+}
+
+function ActionPill({
+  ink,
+  filled,
+  label,
+  icon,
+  onPress,
+}: {
+  ink: string;
+  filled: boolean;
+  label: string;
+  icon: React.ReactNode;
+  onPress: () => void;
+}) {
+  return (
+    <Pressable
+      onPress={onPress}
+      style={({ pressed }) => ({
+        flexDirection: "row",
+        alignItems: "center",
+        gap: 8,
+        paddingHorizontal: 18,
+        paddingVertical: 10,
+        borderRadius: 999,
+        backgroundColor: filled ? ink : "rgba(255,255,255,0.55)",
+        borderWidth: 1,
+        borderColor: filled ? ink : "rgba(0,0,0,0.08)",
+        opacity: pressed ? 0.8 : 1,
+      })}
+    >
+      {icon}
+      <Text
+        style={{
+          fontFamily: "Inter_600SemiBold",
+          fontSize: 12,
+          letterSpacing: 0.6,
+          color: filled ? "#FAF4E8" : ink,
+        }}
+      >
+        {label}
+      </Text>
+    </Pressable>
   );
 }

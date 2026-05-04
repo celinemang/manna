@@ -3,7 +3,7 @@ import type { Locale } from "./config";
 type Dict = {
   appName: string;
   tagline: string;
-  nav: { today: string; feelings: string; saved: string };
+  nav: { today: string; feelings: string; saved: string; you: string };
   home: { eyebrow: string; heading: string };
   feelings: {
     eyebrow: string;
@@ -35,6 +35,9 @@ type Dict = {
     empty: string;
     remove: string;
     open: string;
+    countSummary: string;
+    today: string;
+    yesterday: string;
   };
   journey: {
     eyebrow: string;
@@ -102,7 +105,7 @@ type Dict = {
 const en: Dict = {
   appName: "Manna",
   tagline: "Scripture for your heart, one moment at a time.",
-  nav: { today: "Today", feelings: "Feelings", saved: "Saved" },
+  nav: { today: "Today", feelings: "Feelings", saved: "Saved", you: "You" },
   home: { eyebrow: "Manna", heading: "A verse for today" },
   feelings: {
     eyebrow: "Feelings",
@@ -130,11 +133,14 @@ const en: Dict = {
     unsave: "Saved",
   },
   saved: {
-    eyebrow: "Saved",
-    heading: "Verses you've kept",
-    empty: "Nothing saved yet. Tap Save on any verse to keep it here.",
+    eyebrow: "your library",
+    heading: "Saved verses",
+    empty: "Nothing saved yet.\nWhen a verse speaks to your heart, save it to return to.",
     remove: "Remove",
     open: "Open",
+    countSummary: "{{n}} verses · {{e}} emotions",
+    today: "Today",
+    yesterday: "Yesterday",
   },
   journey: {
     eyebrow: "Journey",
@@ -218,7 +224,7 @@ const en: Dict = {
 const ko: Dict = {
   appName: "만나",
   tagline: "오늘, 마음에 닿는 한 구절.",
-  nav: { today: "오늘", feelings: "마음", saved: "저장" },
+  nav: { today: "오늘", feelings: "마음", saved: "저장", you: "나" },
   home: { eyebrow: "만나", heading: "오늘의 말씀" },
   feelings: {
     eyebrow: "나의 마음",
@@ -251,6 +257,9 @@ const ko: Dict = {
     empty: "아직 저장된 말씀이 없어요.\n마음에 닿은 말씀을 만나면 여기에 저장해 다시 만나보세요.",
     remove: "삭제",
     open: "열기",
+    countSummary: "말씀 {{n}}개 · 감정 {{e}}가지",
+    today: "오늘",
+    yesterday: "어제",
   },
   journey: {
     eyebrow: "여정",

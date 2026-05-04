@@ -56,7 +56,7 @@ export default function TabLayout() {
       <Tabs.Screen
         name="you"
         options={{
-          title: "You",
+          title: t("nav.you"),
           tabBarIcon: ({ color }) => (
             <Icon
               d="M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"

@@ -3,13 +3,21 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useRouter } from "expo-router";
-import { format } from "date-fns";
+import {
+  differenceInCalendarDays,
+  format,
+  getDay,
+} from "date-fns";
+import Svg, { Circle, Path } from "react-native-svg";
 import { emotions, getEmotion } from "@manna/shared/data/emotions";
 import { getVerseById } from "@manna/shared/data/verses";
 import type { EmotionId } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
 import { useLocale } from "../../lib/useLocale";
+import { serifMedium } from "../../lib/typography";
 import { removeItem, useSaved } from "../../lib/saved";
+
+const KO_DAYS = ["일", "월", "화", "수", "목", "금", "토"];
 
 export default function Saved() {
   const { t } = useTranslation();
@@ -23,32 +31,69 @@ export default function Saved() {
     [items, filter],
   );
 
+  const uniqueEmotions = useMemo(
+    () => new Set(items.map((i) => i.emotion).filter(Boolean)).size,
+    [items],
+  );
+
+  const formatDate = (savedAt: number) => {
+    const d = new Date(savedAt);
+    const diff = differenceInCalendarDays(new Date(), d);
+    if (diff === 0) return t("saved.today");
+    if (diff === 1) return t("saved.yesterday");
+    if (locale === "ko") {
+      return `${format(d, "M월 d일")} (${KO_DAYS[getDay(d)]})`;
+    }
+    return format(d, "MMM d");
+  };
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#F4ECDF" }}>
-      <View style={{ paddingHorizontal: 28, paddingTop: 4, paddingBottom: 8 }}>
-        <Text
-          style={{
-            fontFamily: "Inter_500Medium",
-            fontSize: 12,
-            color: "#8A7A66",
-            letterSpacing: 1.6,
-            textTransform: "uppercase",
-          }}
+      <View
+        style={{
+          paddingHorizontal: 28,
+          paddingTop: 4,
+          paddingBottom: 8,
+          flexDirection: "row",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+        }}
+      >
+        <View style={{ flex: 1 }}>
+          <Text style={eyebrow}>{t("saved.eyebrow")}</Text>
+          <Text style={[heading, { fontFamily: serifMedium(locale) }]}>
+            {t("saved.heading")}
+          </Text>
+          {items.length > 0 && (
+            <Text
+              style={{
+                marginTop: 8,
+                fontFamily: "Inter_400Regular",
+                fontSize: 13,
+                color: "#8A7A66",
+                letterSpacing: 0.2,
+              }}
+            >
+              {t("saved.countSummary", { n: items.length, e: uniqueEmotions })}
+            </Text>
+          )}
+        </View>
+        {/* Search affordance — visual only for v1 */}
+        <Pressable
+          hitSlop={12}
+          onPress={() => {}}
+          style={{ width: 36, height: 36, alignItems: "center", justifyContent: "center" }}
         >
-          {t("saved.eyebrow")}
-        </Text>
-        <Text
-          style={{
-            marginTop: 6,
-            fontFamily: "CormorantGaramond_500Medium",
-            fontSize: 30,
-            color: "#3A2E22",
-            letterSpacing: -0.3,
-            lineHeight: 36,
-          }}
-        >
-          {t("saved.heading")}
-        </Text>
+          <Svg width={20} height={20} viewBox="0 0 24 24" fill="none">
+            <Circle cx={11} cy={11} r={7} stroke="#3A2E22" strokeWidth={1.6} />
+            <Path
+              d="M20 20l-3.5-3.5"
+              stroke="#3A2E22"
+              strokeWidth={1.6}
+              strokeLinecap="round"
+            />
+          </Svg>
+        </Pressable>
       </View>
 
       {/* Filter chips */}
@@ -56,9 +101,13 @@ export default function Saved() {
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{ paddingHorizontal: 22, paddingVertical: 8, gap: 8 }}
+          contentContainerStyle={{ paddingHorizontal: 22, paddingVertical: 10, gap: 8 }}
         >
-          <Chip label="All" active={filter === "all"} onPress={() => setFilter("all")} />
+          <Chip
+            label={locale === "ko" ? "전체" : "All"}
+            active={filter === "all"}
+            onPress={() => setFilter("all")}
+          />
           {emotions
             .filter((e) => items.some((i) => i.emotion === e.id))
             .map((e) => (
@@ -91,7 +140,7 @@ export default function Saved() {
           >
             <Text
               style={{
-                fontFamily: "CormorantGaramond_500Medium_Italic",
+                fontFamily: serifMedium(locale),
                 fontSize: 18,
                 color: "#8A7A66",
                 textAlign: "center",
@@ -108,9 +157,8 @@ export default function Saved() {
             const verse = getVerseById(item.verseId);
             const meta = item.emotion ? getEmotion(item.emotion) : undefined;
             if (!verse || !meta) return null;
-            const text = verse.text[locale] ?? verse.text.en;
             const reference = verse.reference[locale] ?? verse.reference.en;
-            const preview = text.length > 110 ? `${text.slice(0, 108)}…` : text;
+            const emotionLabel = t(`emotions.${meta.id as EmotionId}.label`);
             return (
               <Pressable
                 key={item.key}
@@ -123,52 +171,60 @@ export default function Saved() {
                 onLongPress={() => removeItem(item.key)}
                 style={({ pressed }) => ({
                   width: "48.5%",
-                  minHeight: 168,
-                  padding: 14,
+                  aspectRatio: 1,
+                  padding: 16,
                   borderRadius: 18,
                   backgroundColor: meta.bg,
                   justifyContent: "space-between",
                   opacity: pressed ? 0.85 : 1,
                 })}
               >
-                <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+                <View
+                  style={{
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                  }}
+                >
                   <Glyph kind={meta.glyph} size={18} color={meta.ink} strokeWidth={1.5} />
                   <Text
                     style={{
                       fontFamily: "Inter_500Medium",
-                      fontSize: 9.5,
+                      fontSize: 11,
                       color: meta.ink,
                       opacity: 0.55,
-                      letterSpacing: 0.6,
+                      letterSpacing: 0.4,
                     }}
                   >
-                    {format(new Date(item.savedAt), "MMM d")}
+                    {formatDate(item.savedAt)}
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    fontFamily: "CormorantGaramond_500Medium",
-                    fontSize: 14.5,
-                    lineHeight: 19,
-                    color: meta.ink,
-                    letterSpacing: -0.1,
-                  }}
-                  numberOfLines={5}
-                >
-                  {preview}
-                </Text>
-                <Text
-                  style={{
-                    fontFamily: "Inter_600SemiBold",
-                    fontSize: 9.5,
-                    color: meta.ink,
-                    opacity: 0.75,
-                    letterSpacing: 1.2,
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {reference}
-                </Text>
+                <View>
+                  <Text
+                    style={{
+                      fontFamily: "Inter_500Medium",
+                      fontSize: 11,
+                      color: meta.ink,
+                      opacity: 0.6,
+                      letterSpacing: 0.4,
+                    }}
+                  >
+                    {emotionLabel}
+                  </Text>
+                  <Text
+                    style={{
+                      marginTop: 4,
+                      fontFamily: serifMedium(locale),
+                      fontSize: 22,
+                      lineHeight: 28,
+                      color: meta.ink,
+                      letterSpacing: -0.2,
+                    }}
+                    numberOfLines={2}
+                  >
+                    {reference}
+                  </Text>
+                </View>
               </Pressable>
             );
           })}
@@ -191,8 +247,8 @@ function Chip({
     <Pressable
       onPress={onPress}
       style={{
-        paddingHorizontal: 14,
-        paddingVertical: 7,
+        paddingHorizontal: 16,
+        paddingVertical: 8,
         borderRadius: 999,
         borderWidth: 1,
         borderColor: active ? "#3A2E22" : "#D9CBB1",
@@ -202,9 +258,9 @@ function Chip({
       <Text
         style={{
           fontFamily: "Inter_500Medium",
-          fontSize: 12,
+          fontSize: 13,
           color: active ? "#F4ECDF" : "#5A4A38",
-          letterSpacing: 0.4,
+          letterSpacing: 0.3,
         }}
       >
         {label}
@@ -212,3 +268,19 @@ function Chip({
     </Pressable>
   );
 }
+
+const eyebrow = {
+  fontFamily: "Inter_500Medium",
+  fontSize: 12,
+  color: "#8A7A66",
+  letterSpacing: 1.6,
+  textTransform: "uppercase",
+} as const;
+
+const heading = {
+  marginTop: 6,
+  fontSize: 30,
+  color: "#3A2E22",
+  letterSpacing: -0.3,
+  lineHeight: 36,
+} as const;
