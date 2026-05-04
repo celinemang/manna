@@ -1,7 +1,0 @@
-{
-  "version": 1,
-  "functions": {
-    "/api/devotion": {},
-    "/api/share/png": {}
-  }
-}
