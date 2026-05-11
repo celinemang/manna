@@ -94,16 +94,12 @@ type Dict = {
     steps: { kicker: string; title: string; body: string }[];
   };
   emotions: Record<
-    | "anxious"
-    | "lonely"
-    | "tired"
-    | "guilty"
-    | "angry"
-    | "grateful"
-    | "afraid"
-    | "discouraged"
-    | "peaceful"
-    | "hopeful",
+    | "anxiety"
+    | "sadness"
+    | "confidence"
+    | "love"
+    | "release"
+    | "strength",
     { label: string; prompt: string }
   >;
   localeSwitcher: { en: string; ko: string };
@@ -221,16 +217,12 @@ const en: Dict = {
     ],
   },
   emotions: {
-    anxious: { label: "Anxious", prompt: "for an anxious heart" },
-    lonely: { label: "Lonely", prompt: "when you feel alone" },
-    tired: { label: "Tired", prompt: "when you have nothing left" },
-    guilty: { label: "Guilty", prompt: "when shame is heavy" },
-    angry: { label: "Angry", prompt: "to soften a hard moment" },
-    grateful: { label: "Grateful", prompt: "to rest in thanks" },
-    afraid: { label: "Afraid", prompt: "when fear feels close" },
-    discouraged: { label: "Discouraged", prompt: "when the road feels long" },
-    peaceful: { label: "Peaceful", prompt: "to keep the quiet" },
-    hopeful: { label: "Hopeful", prompt: "to lean into hope" },
+    anxiety:    { label: "Anxiety",         prompt: "when worry takes hold" },
+    sadness:    { label: "Feeling low",     prompt: "when the heart feels heavy" },
+    confidence: { label: "Confidence",      prompt: "to stand firm" },
+    love:       { label: "Self-love",       prompt: "to cherish who you are" },
+    release:    { label: "Letting go",      prompt: "to loosen your grip" },
+    strength:   { label: "Strength",        prompt: "for courage and hope" },
   },
   localeSwitcher: { en: "EN", ko: "KO" },
   disclaimer:
@@ -348,16 +340,12 @@ const ko: Dict = {
     ],
   },
   emotions: {
-    anxious: { label: "불안한", prompt: "마음이 불안해요" },
-    lonely: { label: "외로운", prompt: "외로워요" },
-    tired: { label: "지친", prompt: "지쳤어요" },
-    guilty: { label: "죄책감", prompt: "죄책감이 들어요" },
-    angry: { label: "화난", prompt: "화가 나요" },
-    grateful: { label: "감사한", prompt: "감사한 마음이에요" },
-    afraid: { label: "두려운", prompt: "두려워요" },
-    discouraged: { label: "낙담한", prompt: "낙담했어요" },
-    peaceful: { label: "평안한", prompt: "평안해요" },
-    hopeful: { label: "소망", prompt: "소망이 있어요" },
+    anxiety:    { label: "불안",           prompt: "걱정이 밀려올 때" },
+    sadness:    { label: "우울한 마음",    prompt: "마음이 무거울 때" },
+    confidence: { label: "자신감",         prompt: "당당하게 서고 싶을 때" },
+    love:       { label: "나를 사랑하기", prompt: "나를 더 사랑하고 싶을 때" },
+    release:    { label: "내려놓기",       prompt: "손을 펴고 싶을 때" },
+    strength:   { label: "힘이 되는 말씀", prompt: "힘이 필요할 때" },
   },
   localeSwitcher: { en: "EN", ko: "KO" },
   disclaimer:

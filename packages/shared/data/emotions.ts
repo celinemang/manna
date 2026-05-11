@@ -1,18 +1,20 @@
 import type { EmotionId, EmotionMeta } from "../lib/types";
 
-// Designer's emotion table (bg, ink, glyph) from tokens.jsx MANNA_EMOTIONS.
-// Colors from PAGE-SPEC-Feelings.md designer spec (bilingual section)
+// 6 spiritual-wellness categories.
+// Palette: calm + differentiated — each category has its own mood.
 export const emotions: EmotionMeta[] = [
-  { id: "anxious",     bg: "#E8D9C0", ink: "#3A2E20", glyph: "wave"  },
-  { id: "lonely",      bg: "#DAD1BD", ink: "#2E2A22", glyph: "moon"  },
-  { id: "tired",       bg: "#D8DBC4", ink: "#2C2F22", glyph: "leaf"  },
-  { id: "guilty",      bg: "#EADBC9", ink: "#3A2722", glyph: "drop"  },
-  { id: "angry",       bg: "#E8C7A8", ink: "#3D2417", glyph: "flame" },
-  { id: "grateful",    bg: "#F2DEB5", ink: "#3A2C16", glyph: "sun"   },
-  { id: "afraid",      bg: "#E8D9C0", ink: "#3A2E20", glyph: "wave"  },
-  { id: "discouraged", bg: "#DAD1BD", ink: "#2E2A22", glyph: "moon"  },
-  { id: "peaceful",    bg: "#D8DBC4", ink: "#2C2F22", glyph: "leaf"  },
-  { id: "hopeful",     bg: "#F2DEB5", ink: "#3A2C16", glyph: "sun"   },
+  // 불안 — sage green, calm, grounding
+  { id: "anxiety",    bg: "#D8DBC4", ink: "#2C2F22", glyph: "wave"   },
+  // 우울한 마음 — cool grey-blue, quiet
+  { id: "sadness",    bg: "#D4D8DC", ink: "#28303A", glyph: "drop"   },
+  // 자신감 — warm gold, bright, energising
+  { id: "confidence", bg: "#F2DEB5", ink: "#3A2C16", glyph: "spark"  },
+  // 자신을 사랑하기 — warm rose, gentle, tender
+  { id: "love",       bg: "#F0D9CC", ink: "#3D2418", glyph: "sun"    },
+  // 내려놓기 — muted slate blue, quiet surrender
+  { id: "release",    bg: "#C8D4E0", ink: "#1E2C3A", glyph: "leaf"   },
+  // 힘이 되는 말씀 — warm neutral parchment, grounding hope
+  { id: "strength",   bg: "#E8D9C0", ink: "#3A2E20", glyph: "shield" },
 ];
 
 export const emotionIds: EmotionId[] = emotions.map((e) => e.id);

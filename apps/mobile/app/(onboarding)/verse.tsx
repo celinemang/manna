@@ -16,67 +16,50 @@ import { saveItem } from "../../lib/saved";
 import { getSelectedEmotions } from "../../lib/onboarding";
 import { fetchDevotion } from "../../lib/devotion";
 
-// Static offline devotions shown while AI is loading or on network failure
+// Static offline devotions for each of the 6 categories (shown while AI loads)
 const STATIC: Record<string, { reflection: string; prayer: string }> = {
-  anxious: {
+  anxiety: {
     reflection:
       "하나님은 당신의 불안을 가벼이 여기지 않으십니다. 오히려 그 마음을 기도로 가져오라 부르십니다. 평안은 짐을 내려놓는 자에게 주시는 선물입니다.",
     prayer:
       "주님, 불안한 마음을 그대로 주님께 가져갑니다. 주님의 평안을 부어 주시고, 가까이 계심을 신뢰하게 하소서. 아멘.",
   },
-  lonely: {
+  sadness: {
     reflection:
-      "곁에 아무도 없을 때에도 하나님은 함께하신다 약속하십니다. 그분은 지금 당신을 보고 계십니다.",
+      "마음이 무거울 때, 하나님은 가장 가까이 계십니다. 그분은 상한 마음을 외면하지 않으시고 오히려 더 가까이 다가오십니다.",
     prayer:
-      "아버지, 외로움의 아픔을 주님의 가까우심으로 채워 주소서. 아멘.",
+      "아버지, 이 무거운 마음을 당신 앞에 내려놓습니다. 당신의 위로가 내 영혼을 채워 주소서. 아멘.",
   },
-  tired: {
+  confidence: {
     reflection:
-      "예수님은 지친 사람을 책망하지 않으시고 가까이 부르십니다. 쉼은 그저 나아오는 자에게 주시는 선물입니다.",
-    prayer: "주님, 저는 지쳤습니다. 주님 안에서 쉬게 하소서. 아멘.",
-  },
-  guilty: {
-    reflection:
-      "그리스도 안에서 당신을 향한 판결은 더 이상 정죄가 아닙니다. 자비는 얻는 것이 아니라 주어지는 것입니다.",
-    prayer: "예수님, 부끄러움을 씻어 주시고 용서 안에서 걷게 하소서. 아멘.",
-  },
-  angry: {
-    reflection:
-      "분노가 늘 죄는 아닙니다. 그러나 하나님은 말하기 전에 잠시 멈추라 부르십니다.",
+      "당신 안에 하나님의 능력이 있습니다. 두려움은 당신을 정의할 수 없습니다. 그분이 주신 힘으로 오늘을 살아갈 수 있습니다.",
     prayer:
-      "주님, 제 마음의 속도를 늦춰 주소서. 분노 아래 무엇이 있는지 보게 하소서. 아멘.",
+      "주님, 내게 능력과 사랑과 절제하는 마음을 주셔서 감사합니다. 그 힘으로 오늘을 담대히 걸어가게 하소서. 아멘.",
   },
-  grateful: {
+  love: {
     reflection:
-      "감사는 망각을 거스르는 조용한 저항입니다. 오늘, 그 감사가 예배가 되게 하소서.",
-    prayer: "아버지, 이 하루를 감사로 빚어 주소서. 아멘.",
+      "당신은 하나님의 작품입니다. 실수도, 약함도 당신의 가치를 줄이지 않습니다. 그분은 먼저 당신을 사랑하셨고, 지금도 사랑하고 계십니다.",
+    prayer:
+      "주님, 내가 하나님의 형상으로 지음 받았음을 감사드립니다. 오늘 나 자신을 더 사랑할 수 있도록 도와주소서. 아멘.",
   },
-  afraid: {
+  release: {
     reflection:
-      "두려움은 세상을 작게 만듭니다. 그러나 하나님은 어두운 골짜기를 당신 곁에서 함께 걸으십니다.",
-    prayer: "주님, 두려움이 올라올 때 주님의 임재에 저를 묶어 주소서. 아멘.",
+      "손을 펴는 것은 포기가 아닙니다. 그것은 하나님을 신뢰하는 행위입니다. 내가 잡고 있던 것을 내려놓을 때 비로소 하나님의 평안이 채워집니다.",
+    prayer:
+      "주님, 내 힘으로 붙잡고 있던 것들을 오늘 당신께 드립니다. 당신의 뜻이 이루어지게 하소서. 아멘.",
   },
-  discouraged: {
+  strength: {
     reflection:
-      "길이 길게 느껴질 때에도 하나님의 자비는 여전히 옵니다 — 아침마다 새롭게. 포기하지 마세요.",
-    prayer: "아버지, 제 눈이 낮아질 때 들어 올려 주소서. 아멘.",
-  },
-  peaceful: {
-    reflection:
-      "고요함은 비어 있는 것이 아니라, 하나님의 음성이 자라나는 토양입니다.",
-    prayer: "주님, 이 고요를 주심에 감사합니다. 아멘.",
-  },
-  hopeful: {
-    reflection:
-      "소망은 순진함이 아니라 신뢰의 실체입니다. 하나님은 기댈 수 있는 미래를 쓰고 계십니다.",
-    prayer: "소망의 하나님, 오늘 주님을 신뢰함으로 기쁨이 가득하게 하소서. 아멘.",
+      "소망은 순진함이 아니라 신뢰의 실체입니다. 하나님은 당신을 위한 미래를 이미 알고 계시며, 좋은 계획으로 이끌고 계십니다.",
+    prayer:
+      "소망의 하나님, 오늘 주님을 신뢰함으로 기쁨과 평화가 가득하게 하소서. 아멘.",
   },
 };
 
 export default function VerseStep() {
   const { locale } = useLocale();
   const router = useRouter();
-  const [emotionId, setEmotionId] = useState<EmotionId>("anxious");
+  const [emotionId, setEmotionId] = useState<EmotionId>("anxiety");
   const [saved, setSaved] = useState(false);
 
   const [aiReflection, setAiReflection] = useState<string | null>(null);

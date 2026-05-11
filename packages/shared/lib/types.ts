@@ -1,25 +1,18 @@
 import type { Locale } from "../i18n/config";
 
+// 6 spiritual-wellness categories — "감정 + 자기회복 + 삶의 방향성"
 export type EmotionId =
-  | "anxious"
-  | "lonely"
-  | "tired"
-  | "guilty"
-  | "angry"
-  | "grateful"
-  | "afraid"
-  | "discouraged"
-  | "peaceful"
-  | "hopeful";
+  | "anxiety"    // 불안
+  | "sadness"    // 우울한 마음
+  | "confidence" // 자신감
+  | "love"       // 자신을 사랑하기
+  | "release"    // 내려놓기
+  | "strength";  // 힘이 되는 말씀
 
 export type EmotionMeta = {
   id: EmotionId;
-  // Designer's per-emotion paper tones — bg fills the verse card, ink colors
-  // the type. See HANDOFF + tokens.jsx (MANNA_EMOTIONS).
   bg: string;
   ink: string;
-  // Glyph kind from MannaGlyph (wave / moon / leaf / drop / flame / sun /
-  // shield / spark / wheat).
   glyph:
     | "wave"
     | "moon"
