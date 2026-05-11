@@ -83,6 +83,14 @@ type Dict = {
     skip: string;
     continue: string;
     begin: string;
+    start: string;
+    allow: string;
+    notifSkip: string;
+    selectHint: string;
+    morning: string;
+    afternoon: string;
+    evening: string;
+    custom: string;
     steps: { kicker: string; title: string; body: string }[];
   };
   emotions: Record<
@@ -186,6 +194,14 @@ const en: Dict = {
     skip: "Skip",
     continue: "Continue",
     begin: "Begin",
+    start: "Begin",
+    allow: "Allow notifications",
+    notifSkip: "Skip for now",
+    selectHint: "Choose all that apply",
+    morning: "Morning · 8 AM",
+    afternoon: "Afternoon · 12 PM",
+    evening: "Evening · 9 PM",
+    custom: "Set a custom time",
     steps: [
       {
         kicker: "Welcome",
@@ -305,6 +321,14 @@ const ko: Dict = {
     skip: "건너뛰기",
     continue: "계속",
     begin: "시작하기",
+    start: "시작하기",
+    allow: "알림 받기",
+    notifSkip: "나중에 설정할게요",
+    selectHint: "여러 개 선택 가능해요",
+    morning: "아침 · 8시",
+    afternoon: "점심 · 12시",
+    evening: "저녁 · 9시",
+    custom: "직접 설정",
     steps: [
       {
         kicker: "환영합니다",

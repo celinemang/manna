@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git remote *)",
+      "Bash(git push *)",
+      "Bash(git fetch *)",
+      "Bash(git rebase *)",
+      "Bash(git checkout *)",
+      "Skill(claude-api)",
+      "Skill(claude-api:*)",
+      "Bash(npm install *)",
+      "Bash(rm /Users/celine/manna/src/data/emotions.ts /Users/celine/manna/src/app/feelings/page.tsx /Users/celine/manna/src/app/feelings/\\\\[emotion\\\\]/page.tsx /Users/celine/manna/src/app/feelings/\\\\[emotion\\\\]/EmotionResult.tsx)",
+      "Bash(rmdir /Users/celine/manna/src/app/feelings/\\\\[emotion\\\\] /Users/celine/manna/src/app/feelings)",
+      "Bash(node -e \"const g = require\\('@google/genai'\\); console.log\\(Object.keys\\(g\\).slice\\(0,20\\)\\)\")",
+      "Bash(node -e \"const g = require\\('@google/genai'\\); console.log\\(typeof g.GoogleGenAI, typeof g.Type\\)\")",
+      "Bash(npm uninstall *)",
+      "Bash(curl -fs http://localhost:3137 -o /dev/null)",
+      "Bash(curl -s -X POST http://localhost:3137/api/devotion -H \"Content-Type: application/json\" -d '{\"verseId\":\"anxious-001\",\"emotion\":\"anxious\",\"locale\":\"en\"}')",
+      "Bash(curl -s -X POST http://localhost:3137/api/devotion -H \"Content-Type: application/json\" -d '{\"verseId\":\"tired-002\",\"emotion\":\"tired\",\"locale\":\"ko\"}')",
+      "Bash(kill %1)",
+      "Bash(pkill -f \"next dev --port 3137\")"
+    ]
+  }
+}
