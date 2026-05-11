@@ -108,9 +108,9 @@ const en: Dict = {
   nav: { today: "Today", feelings: "Feelings", saved: "Saved", you: "You" },
   home: { eyebrow: "Manna", heading: "A verse for today" },
   feelings: {
-    eyebrow: "Feelings",
+    eyebrow: "Your heart",
     heading: "How is your heart today?",
-    subheading: "Choose one feeling and receive Scripture for this moment.",
+    subheading: "Choose one feeling — we'll bring you a verse made for it.",
   },
   result: {
     eyebrowPrefix: "",

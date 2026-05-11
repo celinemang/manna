@@ -1,17 +1,18 @@
 import type { EmotionId, EmotionMeta } from "../lib/types";
 
 // Designer's emotion table (bg, ink, glyph) from tokens.jsx MANNA_EMOTIONS.
+// Colors from PAGE-SPEC-Feelings.md designer spec (bilingual section)
 export const emotions: EmotionMeta[] = [
-  { id: "anxious", bg: "#E7E1D2", ink: "#3A2E22", glyph: "wave" },
-  { id: "lonely", bg: "#D8DCE3", ink: "#2A3142", glyph: "moon" },
-  { id: "tired", bg: "#E6DCC4", ink: "#4A3A28", glyph: "leaf" },
-  { id: "guilty", bg: "#D9CFC4", ink: "#3A2E22", glyph: "drop" },
-  { id: "angry", bg: "#E8D4CA", ink: "#3A2620", glyph: "flame" },
-  { id: "grateful", bg: "#E0E2CC", ink: "#2F3A2C", glyph: "sun" },
-  { id: "afraid", bg: "#D6D8DD", ink: "#2A2E3A", glyph: "shield" },
-  { id: "discouraged", bg: "#DCD4C8", ink: "#3A2E22", glyph: "wave" },
-  { id: "peaceful", bg: "#DCE3DA", ink: "#2F3A2C", glyph: "sun" },
-  { id: "hopeful", bg: "#E5DCC0", ink: "#3A2E22", glyph: "spark" },
+  { id: "anxious",     bg: "#E8D9C0", ink: "#3A2E20", glyph: "wave"  },
+  { id: "lonely",      bg: "#DAD1BD", ink: "#2E2A22", glyph: "moon"  },
+  { id: "tired",       bg: "#D8DBC4", ink: "#2C2F22", glyph: "leaf"  },
+  { id: "guilty",      bg: "#EADBC9", ink: "#3A2722", glyph: "drop"  },
+  { id: "angry",       bg: "#E8C7A8", ink: "#3D2417", glyph: "flame" },
+  { id: "grateful",    bg: "#F2DEB5", ink: "#3A2C16", glyph: "sun"   },
+  { id: "afraid",      bg: "#E8D9C0", ink: "#3A2E20", glyph: "wave"  },
+  { id: "discouraged", bg: "#DAD1BD", ink: "#2E2A22", glyph: "moon"  },
+  { id: "peaceful",    bg: "#D8DBC4", ink: "#2C2F22", glyph: "leaf"  },
+  { id: "hopeful",     bg: "#F2DEB5", ink: "#3A2C16", glyph: "sun"   },
 ];
 
 export const emotionIds: EmotionId[] = emotions.map((e) => e.id);
