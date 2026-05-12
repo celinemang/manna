@@ -91,31 +91,6 @@ export default function Today() {
         />
       </View>
 
-      {/* Page indicator */}
-      <View
-        style={{
-          position: "absolute",
-          right: 8,
-          top: "50%",
-          transform: [{ translateY: -50 }],
-          gap: 3,
-        }}
-        pointerEvents="none"
-      >
-        {ordered.slice(0, 8).map((_, i) => (
-          <View
-            key={i}
-            style={{
-              width: 3,
-              height: i === index % 8 ? 16 : 4,
-              borderRadius: 999,
-              backgroundColor:
-                i === index % 8 ? "#F5EBD7" : "rgba(244,236,223,0.3)",
-            }}
-          />
-        ))}
-      </View>
-
       {/* Up-swipe hint */}
       <View
         style={{

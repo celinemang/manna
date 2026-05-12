@@ -10,7 +10,6 @@ import type { EmotionId } from "@manna/shared/lib/types";
 import { PaperGrain } from "../../components/PaperGrain";
 import { Glyph } from "../../components/Glyph";
 import { useLocale } from "../../lib/useLocale";
-import { serifMedium, serifItalic } from "../../lib/typography";
 import { tokens } from "../../lib/tokens";
 import { saveItem } from "../../lib/saved";
 import { getSelectedEmotions } from "../../lib/onboarding";
@@ -135,7 +134,7 @@ export default function VerseStep() {
               textTransform: "uppercase",
             }}
           >
-            {locale === "ko" ? "오늘의 첫 말씀" : "Your first verse"}
+            오늘의 첫 말씀
           </Text>
         </Animated.View>
 
@@ -155,7 +154,7 @@ export default function VerseStep() {
           <PaperGrain opacity={0.07} color={meta.ink} />
           <Text
             style={{
-              fontFamily: serifMedium(locale),
+              fontFamily: "NotoSerifKR_500Medium",
               fontSize: 72,
               color: meta.ink,
               opacity: 0.15,
@@ -168,7 +167,7 @@ export default function VerseStep() {
           <Text
             style={{
               marginTop: 4,
-              fontFamily: serifMedium(locale),
+              fontFamily: "NotoSerifKR_500Medium",
               fontSize: text.length > 140 ? 19 : 22,
               lineHeight: text.length > 140 ? 29 : 33,
               color: meta.ink,
@@ -205,20 +204,20 @@ export default function VerseStep() {
               textTransform: "uppercase",
             }}
           >
-            {locale === "ko" ? "묵상" : "Reflection"}
+            묵상
           </Text>
           {aiLoading ? (
             <View style={{ flexDirection: "row", gap: 10, alignItems: "center", marginTop: 10 }}>
               <ActivityIndicator size="small" color={tokens.ink3} />
-              <Text style={{ fontFamily: "InterTight_400Regular", fontSize: 13, color: tokens.ink3 }}>
-                {locale === "ko" ? "준비 중…" : "Preparing…"}
+              <Text style={{ fontFamily: "NotoSansKR_400Regular", fontSize: 13, color: tokens.ink3 }}>
+                준비 중…
               </Text>
             </View>
           ) : (
             <Text
               style={{
                 marginTop: 10,
-                fontFamily: serifMedium(locale),
+                fontFamily: "NotoSerifKR_500Medium",
                 fontSize: 17,
                 lineHeight: 27,
                 color: tokens.ink,
@@ -240,7 +239,7 @@ export default function VerseStep() {
               textTransform: "uppercase",
             }}
           >
-            {locale === "ko" ? "기도" : "Prayer"}
+            기도
           </Text>
           {aiLoading ? (
             <View style={{ height: 16, width: "70%", borderRadius: 4, backgroundColor: "rgba(42,33,26,0.07)", marginTop: 10 }} />
@@ -255,7 +254,7 @@ export default function VerseStep() {
             >
               <Text
                 style={{
-                  fontFamily: serifItalic(locale),
+                  fontFamily: "NotoSerifKR_500Medium",
                   fontSize: 16,
                   lineHeight: 26,
                   color: tokens.ink2,
@@ -316,12 +315,12 @@ export default function VerseStep() {
         >
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_600SemiBold" : "InterTight_600SemiBold",
+              fontFamily: "NotoSansKR_600SemiBold",
               fontSize: 16,
               color: tokens.cream,
             }}
           >
-            {locale === "ko" ? "탐색 시작하기" : "Start exploring"}
+            탐색 시작하기
           </Text>
         </Pressable>
       </Animated.View>

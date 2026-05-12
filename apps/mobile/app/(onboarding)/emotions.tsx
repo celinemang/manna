@@ -9,14 +9,11 @@ import type { EmotionId } from "@manna/shared/lib/types";
 import { Glyph } from "../../components/Glyph";
 import { PaperGrain } from "../../components/PaperGrain";
 import { ProgressDots } from "../../components/ProgressDots";
-import { useLocale } from "../../lib/useLocale";
-import { serifMedium } from "../../lib/typography";
 import { tokens } from "../../lib/tokens";
 import { saveSelectedEmotions } from "../../lib/onboarding";
 
 export default function EmotionsStep() {
   const { t } = useTranslation();
-  const { locale } = useLocale();
   const router = useRouter();
   const [selected, setSelected] = useState<Set<EmotionId>>(new Set());
 
@@ -45,19 +42,19 @@ export default function EmotionsStep() {
       >
         <Text
           style={{
-            fontFamily: serifMedium(locale),
+            fontFamily: "NotoSerifKR_500Medium",
             fontSize: 28,
             color: tokens.ink,
             lineHeight: 36,
             letterSpacing: -0.3,
           }}
         >
-          {locale === "ko" ? "지금 마음을\n골라주세요" : "How are you\nfeeling right now?"}
+          {"지금 마음을\n골라주세요"}
         </Text>
         <Text
           style={{
             marginTop: 8,
-            fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+            fontFamily: "NotoSansKR_400Regular",
             fontSize: 13,
             color: tokens.ink3,
             lineHeight: 20,
@@ -107,7 +104,7 @@ export default function EmotionsStep() {
                   />
                   <Text
                     style={{
-                      fontFamily: serifMedium(locale),
+                      fontFamily: "NotoSerifKR_500Medium",
                       fontSize: 18,
                       color: active ? tokens.cream : em.ink,
                       letterSpacing: -0.2,
@@ -151,12 +148,12 @@ export default function EmotionsStep() {
         >
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_600SemiBold" : "InterTight_600SemiBold",
+              fontFamily: "NotoSansKR_600SemiBold",
               fontSize: 16,
               color: selected.size === 0 ? tokens.ink3 : tokens.cream,
             }}
           >
-            {locale === "ko" ? "계속" : "Continue"}
+            다음
           </Text>
         </Pressable>
       </View>

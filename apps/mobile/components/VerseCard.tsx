@@ -1,4 +1,11 @@
+import { useEffect } from "react";
 import { Pressable, Text, View } from "react-native";
+import Animated, {
+  interpolateColor,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from "react-native-reanimated";
 import Svg, { Path } from "react-native-svg";
 import * as Haptics from "expo-haptics";
 import { useTranslation } from "react-i18next";
@@ -35,7 +42,9 @@ export function VerseCard({
   const translation = verse.translation[locale] ?? verse.translation.en;
   const isLong = text.length > 220;
   const handleSave = () => {
-    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+    void Haptics.impactAsync(
+      saved ? Haptics.ImpactFeedbackStyle.Light : Haptics.ImpactFeedbackStyle.Medium
+    );
     onToggleSave?.();
   };
   const handleShare = () => {
@@ -219,33 +228,59 @@ function ActionPill({
   icon: React.ReactNode;
   onPress: () => void;
 }) {
+  const progress = useSharedValue(filled ? 1 : 0);
+
+  useEffect(() => {
+    progress.value = withTiming(filled ? 1 : 0, { duration: 220 });
+  }, [filled]);
+
+  const pillStyle = useAnimatedStyle(() => ({
+    backgroundColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      ["rgba(255,255,255,0.55)", ink]
+    ),
+    borderColor: interpolateColor(
+      progress.value,
+      [0, 1],
+      ["rgba(0,0,0,0.08)", ink]
+    ),
+  }));
+
+  const labelStyle = useAnimatedStyle(() => ({
+    color: interpolateColor(progress.value, [0, 1], [ink, "#FAF4E8"]),
+  }));
+
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => ({
-        flexDirection: "row",
-        alignItems: "center",
-        gap: 8,
-        paddingHorizontal: 18,
-        paddingVertical: 10,
-        borderRadius: 999,
-        backgroundColor: filled ? ink : "rgba(255,255,255,0.55)",
-        borderWidth: 1,
-        borderColor: filled ? ink : "rgba(0,0,0,0.08)",
-        opacity: pressed ? 0.8 : 1,
-      })}
-    >
-      {icon}
-      <Text
-        style={{
-          fontFamily: "InterTight_600SemiBold",
-          fontSize: 12,
-          letterSpacing: 0.6,
-          color: filled ? "#FAF4E8" : ink,
-        }}
+    <Pressable onPress={onPress} style={({ pressed }) => ({ opacity: pressed ? 0.8 : 1 })}>
+      <Animated.View
+        style={[
+          {
+            flexDirection: "row",
+            alignItems: "center",
+            gap: 8,
+            paddingHorizontal: 18,
+            paddingVertical: 10,
+            borderRadius: 999,
+            borderWidth: 1,
+          },
+          pillStyle,
+        ]}
       >
-        {label}
-      </Text>
+        {icon}
+        <Animated.Text
+          style={[
+            {
+              fontFamily: "InterTight_600SemiBold",
+              fontSize: 12,
+              letterSpacing: 0.6,
+            },
+            labelStyle,
+          ]}
+        >
+          {label}
+        </Animated.Text>
+      </Animated.View>
     </Pressable>
   );
 }

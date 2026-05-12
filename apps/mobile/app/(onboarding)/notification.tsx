@@ -3,11 +3,8 @@ import { Pressable, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
-import { useTranslation } from "react-i18next";
 import { PaperGrain } from "../../components/PaperGrain";
 import { ProgressDots } from "../../components/ProgressDots";
-import { useLocale } from "../../lib/useLocale";
-import { serifMedium } from "../../lib/typography";
 import { tokens } from "../../lib/tokens";
 import {
   cancelDailyReminder,
@@ -25,8 +22,6 @@ const PRESETS: { id: TimeOption; hour: number }[] = [
 ];
 
 export default function NotificationStep() {
-  const { t } = useTranslation();
-  const { locale } = useLocale();
   const router = useRouter();
   const [chosen, setChosen] = useState<TimeOption | null>(null);
   const [customHour, setCustomHour] = useState(8);
@@ -36,7 +31,7 @@ export default function NotificationStep() {
   const fmtHour = (h: number) => {
     const ampm = h < 12 ? "AM" : "PM";
     const display = h % 12 === 0 ? 12 : h % 12;
-    return locale === "ko" ? `${h}시` : `${display}:00 ${ampm}`;
+    return `${h}시`;
   };
 
   const onAllow = async () => {
@@ -47,8 +42,8 @@ export default function NotificationStep() {
     await scheduleDailyReminder({
       hour,
       minute: 0,
-      title: locale === "ko" ? "오늘의 말씀" : "A verse for today",
-      body: locale === "ko" ? "잠시 말씀과 함께해요." : "Open Manna for a quiet word.",
+      title: "오늘의 말씀",
+      body: "잠시 말씀과 함께해요.",
     });
     await setOnboarded();
     router.replace("/(onboarding)/verse");
@@ -61,10 +56,10 @@ export default function NotificationStep() {
   };
 
   const labelFor = (id: TimeOption) => {
-    if (id === "morning") return t("onboarding.morning");
-    if (id === "afternoon") return t("onboarding.afternoon");
-    if (id === "evening") return t("onboarding.evening");
-    return t("onboarding.custom");
+    if (id === "morning") return "아침";
+    if (id === "afternoon") return "점심";
+    if (id === "evening") return "저녁";
+    return "직접 설정";
   };
 
   return (
@@ -75,26 +70,24 @@ export default function NotificationStep() {
         <Animated.View entering={FadeInDown.duration(600)} style={{ gap: 14 }}>
           <Text
             style={{
-              fontFamily: serifMedium(locale),
+              fontFamily: "NotoSerifKR_500Medium",
               fontSize: 32,
               color: tokens.ink,
               lineHeight: 40,
               letterSpacing: -0.4,
             }}
           >
-            {locale === "ko" ? "언제 말씀을\n받고 싶으신가요?" : "When would you\nlike your daily verse?"}
+            {"언제 말씀을\n받고 싶으신가요?"}
           </Text>
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+              fontFamily: "NotoSansKR_400Regular",
               fontSize: 14,
               color: tokens.ink3,
               lineHeight: 22,
             }}
           >
-            {locale === "ko"
-              ? "하루 중 조용히 말씀을 읽기 좋은 시간을 골라주세요."
-              : "Choose a time for a quiet moment with Scripture each day."}
+            하루 중 조용히 말씀을 읽기 좋은 시간을 골라주세요.
           </Text>
         </Animated.View>
 
@@ -121,7 +114,7 @@ export default function NotificationStep() {
               >
                 <Text
                   style={{
-                    fontFamily: locale === "ko" ? "NotoSansKR_500Medium" : "InterTight_500Medium",
+                    fontFamily: "NotoSansKR_500Medium",
                     fontSize: 15,
                     color: active ? tokens.cream : tokens.ink,
                   }}
@@ -131,7 +124,7 @@ export default function NotificationStep() {
                 {active && p.id !== "custom" && (
                   <Text
                     style={{
-                      fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+                      fontFamily: "NotoSansKR_400Regular",
                       fontSize: 13,
                       color: active ? "rgba(245,235,215,0.65)" : tokens.ink3,
                     }}
@@ -192,7 +185,7 @@ export default function NotificationStep() {
               </Pressable>
               <Text
                 style={{
-                  fontFamily: serifMedium(locale),
+                  fontFamily: "NotoSerifKR_500Medium",
                   fontSize: 28,
                   color: tokens.ink,
                   minWidth: 80,
@@ -233,24 +226,24 @@ export default function NotificationStep() {
         >
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_600SemiBold" : "InterTight_600SemiBold",
+              fontFamily: "NotoSansKR_600SemiBold",
               fontSize: 16,
               color: !chosen ? tokens.ink3 : tokens.cream,
             }}
           >
-            {t("onboarding.allow")}
+            알림 설정하기
           </Text>
         </Pressable>
         <Pressable onPress={onSkip} hitSlop={12}>
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+              fontFamily: "NotoSansKR_400Regular",
               fontSize: 13,
               color: tokens.ink3,
               textDecorationLine: "underline",
             }}
           >
-            {t("onboarding.notifSkip")}
+            나중에 설정할게요
           </Text>
         </Pressable>
       </Animated.View>

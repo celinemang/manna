@@ -4,26 +4,17 @@ import { useRouter } from "expo-router";
 import Animated, { FadeInDown } from "react-native-reanimated";
 import { PaperGrain } from "../../components/PaperGrain";
 import { ProgressDots } from "../../components/ProgressDots";
-import { useLocale } from "../../lib/useLocale";
-import { serifMedium } from "../../lib/typography";
 import { tokens } from "../../lib/tokens";
 
-const FEATURES_KO = [
+const FEATURES = [
   { icon: "📖", title: "오늘의 말씀", body: "매일 새로운 성경 구절로 하루를 시작해요." },
   { icon: "🙏", title: "짧은 기도", body: "지금 마음을 담은 기도문을 받아보세요." },
   { icon: "💛", title: "하루의 위로", body: "당신의 감정에 맞춘 말씀 묵상이에요." },
 ] as const;
 
-const FEATURES_EN = [
-  { icon: "📖", title: "Daily verse", body: "Start each day with a fresh Scripture reading." },
-  { icon: "🙏", title: "A short prayer", body: "A quiet prayer tailored to how you feel." },
-  { icon: "💛", title: "Daily comfort", body: "A reflection written for your heart's moment." },
-] as const;
-
 export default function Value() {
   const router = useRouter();
-  const { locale } = useLocale();
-  const features = locale === "ko" ? FEATURES_KO : FEATURES_EN;
+  const features = FEATURES;
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
@@ -33,14 +24,14 @@ export default function Value() {
         <Animated.Text
           entering={FadeInDown.duration(600)}
           style={{
-            fontFamily: serifMedium(locale),
+            fontFamily: "NotoSerifKR_500Medium",
             fontSize: 32,
             color: tokens.ink,
             lineHeight: 40,
             letterSpacing: -0.4,
           }}
         >
-          {locale === "ko" ? "하루에 잠시,\n말씀과 머무는 시간" : "A quiet moment\nwith God's word, daily."}
+          {"하루에 잠시,\n말씀과 머무는 시간"}
         </Animated.Text>
 
         <View style={{ gap: 16 }}>
@@ -63,7 +54,7 @@ export default function Value() {
               <View style={{ flex: 1 }}>
                 <Text
                   style={{
-                    fontFamily: serifMedium(locale),
+                    fontFamily: "NotoSerifKR_500Medium",
                     fontSize: 18,
                     color: tokens.ink,
                     letterSpacing: -0.1,
@@ -74,7 +65,7 @@ export default function Value() {
                 <Text
                   style={{
                     marginTop: 4,
-                    fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+                    fontFamily: "NotoSansKR_400Regular",
                     fontSize: 13,
                     color: tokens.ink3,
                     lineHeight: 20,
@@ -108,12 +99,12 @@ export default function Value() {
         >
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_600SemiBold" : "InterTight_600SemiBold",
+              fontFamily: "NotoSansKR_600SemiBold",
               fontSize: 16,
               color: tokens.cream,
             }}
           >
-            {locale === "ko" ? "계속" : "Continue"}
+            다음
           </Text>
         </Pressable>
       </Animated.View>

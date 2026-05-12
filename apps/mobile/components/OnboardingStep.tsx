@@ -12,7 +12,7 @@ import { PaperGrain } from "./PaperGrain";
 
 type Props = {
   step: 0 | 1 | 2;
-  nextHref?: "/(onboarding)/more" | "/(onboarding)/begin" | "/(tabs)";
+  nextHref?: "/(onboarding)/verse" | "/(tabs)";
 };
 
 const GLYPHS = ["wheat", "spark", "sun"] as const;

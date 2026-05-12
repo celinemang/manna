@@ -5,13 +5,10 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 import { Glyph } from "../../components/Glyph";
 import { PaperGrain } from "../../components/PaperGrain";
 import { ProgressDots } from "../../components/ProgressDots";
-import { useLocale } from "../../lib/useLocale";
-import { serifMedium } from "../../lib/typography";
 import { tokens } from "../../lib/tokens";
 
 export default function Empathy() {
   const router = useRouter();
-  const { locale } = useLocale();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: tokens.cream }}>
@@ -29,27 +26,25 @@ export default function Empathy() {
         <Animated.View entering={FadeInDown.duration(700).delay(150)} style={{ gap: 16 }}>
           <Text
             style={{
-              fontFamily: serifMedium(locale),
+              fontFamily: "NotoSerifKR_500Medium",
               fontSize: 34,
               color: tokens.ink,
               lineHeight: 42,
               letterSpacing: -0.4,
             }}
           >
-            {locale === "ko" ? "오늘 마음은\n어떤가요?" : "How is your\nheart today?"}
+            {"오늘 마음은\n어떤가요?"}
           </Text>
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_400Regular" : "InterTight_400Regular",
+              fontFamily: "NotoSansKR_400Regular",
               fontSize: 15,
               color: tokens.ink3,
               lineHeight: 24,
               maxWidth: 300,
             }}
           >
-            {locale === "ko"
-              ? "불안하거나, 외롭거나, 지쳐 있을 때에도\n말씀은 당신을 만날 수 있습니다."
-              : "Whether anxious, lonely, or worn out —\nScripture can meet you right where you are."}
+            {"불안하거나, 외롭거나, 지쳐 있을 때에도\n말씀은 당신을 만날 수 있습니다."}
           </Text>
         </Animated.View>
       </View>
@@ -79,12 +74,12 @@ export default function Empathy() {
         >
           <Text
             style={{
-              fontFamily: locale === "ko" ? "NotoSansKR_600SemiBold" : "InterTight_600SemiBold",
+              fontFamily: "NotoSansKR_600SemiBold",
               fontSize: 16,
               color: tokens.cream,
             }}
           >
-            {locale === "ko" ? "계속" : "Continue"}
+            다음
           </Text>
         </Pressable>
       </Animated.View>
